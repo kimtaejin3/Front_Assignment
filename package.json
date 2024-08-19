@@ -8,6 +8,10 @@
     "atlassian"
   ],
   "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production"
+  },
   "dependencies": {
     "react": "18.2.0",
     "react-beautiful-dnd": "13.1.1",
