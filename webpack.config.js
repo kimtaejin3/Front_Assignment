@@ -3,7 +3,7 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.ts",
+  entry: "./src/index.tsx",
   output: {
     filename: "bundle.js",
   },
@@ -21,14 +21,21 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.tsx?$/,
-        use: "ts-loader",
+        test: /\.(ts|tsx)$/,
+        use: {
+          loader: "ts-loader",
+          options: {
+            compilerOptions: {
+              noEmit: false,
+            },
+          },
+        },
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx", ".tsx", ".ts"],
+    extensions: [".tsx", ".ts", ".js", ".jsx"],
   },
   plugins: [
     new HtmlWebpackPlugin({

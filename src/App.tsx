@@ -1,5 +1,11 @@
 import ItemList from "./components/ItemList";
 
-export default function App() {
-  return <ItemList />;
-}
+const App: React.FC = () => {
+  return (
+    <>
+      <ItemList />
+    </>
+  );
+};
+
+export default App;
