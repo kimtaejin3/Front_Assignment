@@ -1,0 +1,9 @@
+feat: 기능 구현시
+fix: 버그 수정시
+refactor: 코드 리팩토링시
+docs: 문서 작업시
+chore: 설정 파일을 생성 및 수정시
+style: 로직과는 상관없는 자잘한 코드수정
+design: css와 같은 스타일링
+rename: 폴더 및 파일 이름 변경
+move: 파일 및 폴더 경로 변경
