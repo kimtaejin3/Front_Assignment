@@ -1,6 +1,5 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useState, useCallback } from "react";
-import React from "react";
 
 export default function ItemList() {
   const getItems = (count) =>
