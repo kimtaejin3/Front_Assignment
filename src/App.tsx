@@ -1,5 +1,4 @@
-import { CSSProperties, SetStateAction, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { CSSProperties, SetStateAction, useEffect, useState } from "react";
 import {
   DragDropContext,
   Draggable,
@@ -45,19 +44,19 @@ type ColumnsType = {
 };
 
 export const columnsFromBackend: ColumnsType = {
-  [uuidv4()]: {
+  1: {
     title: "To-do",
     items: data,
   },
-  [uuidv4()]: {
+  2: {
     title: "In Progress",
     items: [],
   },
-  [uuidv4()]: {
+  3: {
     title: "Fail",
     items: [],
   },
-  [uuidv4()]: {
+  4: {
     title: "Done",
     items: [],
   },
@@ -65,6 +64,8 @@ export const columnsFromBackend: ColumnsType = {
 
 const App: React.FC = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
+  const [error, setError] = useState(false);
+  const [indexState, setIndexState] = useState(null);
 
   const onDragEnd = (
     result: DropResult,
@@ -72,6 +73,9 @@ const App: React.FC = () => {
     setColumns: React.Dispatch<SetStateAction<ColumnsType>>
   ) => {
     const { source, destination } = result;
+    if (source.droppableId === "1" && destination.droppableId === "3") {
+      return;
+    }
     if (source.droppableId !== destination.droppableId) {
       const sourceColumn = columns[source.droppableId];
       const destColumn = columns[destination.droppableId];
@@ -108,6 +112,20 @@ const App: React.FC = () => {
   return (
     <DragDropContext
       onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+      onDragUpdate={(result) => {
+        if (
+          result.destination?.droppableId === "3" &&
+          result.source?.droppableId === "1"
+        ) {
+          setIndexState(result.source.index);
+          setError(true);
+        } else {
+          setIndexState(null);
+          setError(false);
+        }
+
+        console.log(result);
+      }}
     >
       <div style={getContainerStyle}>
         {Object.entries(columns).map(([columId, column], index) => {
@@ -117,7 +135,7 @@ const App: React.FC = () => {
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  style={getListStyle(snapshot.isDraggingOver)}
+                  style={getListStyle(snapshot.isDraggingOver, error)}
                 >
                   {column.items.map((item, index) => (
                     <Draggable
@@ -132,7 +150,8 @@ const App: React.FC = () => {
                           {...provided.dragHandleProps}
                           style={getItemStyle(
                             snapshot.isDragging,
-                            provided.draggableProps.style
+                            provided.draggableProps.style,
+                            indexState === index
                           )}
                         >
                           {item.Task}
@@ -140,6 +159,7 @@ const App: React.FC = () => {
                       )}
                     </Draggable>
                   ))}
+                  {provided.placeholder}
                 </div>
               )}
             </Droppable>
@@ -162,17 +182,23 @@ const GRID = 8;
 
 const getItemStyle = (
   isDragging: boolean,
-  draggableStyle: DraggingStyle | NotDraggingStyle
+  draggableStyle: DraggingStyle | NotDraggingStyle,
+  a: boolean
 ): CSSProperties => ({
   userSelect: "none",
   padding: GRID * 2,
   margin: `0 0 ${GRID}px 0`,
   background: isDragging ? "lightgreen" : "grey",
+  fontSize: a ? "40px" : "15px",
   ...draggableStyle,
 });
 
-const getListStyle = (isDraggingOver: boolean): CSSProperties => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
+const getListStyle = (
+  isDraggingOver: boolean,
+  error: boolean
+): CSSProperties => ({
+  background: isDraggingOver ? (error ? "red" : "lightblue") : "lightgrey",
+
   padding: GRID,
   width: 250,
   minHeight: 500,
