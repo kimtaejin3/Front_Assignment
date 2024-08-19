@@ -7,6 +7,7 @@ import {
   DropResult,
   NotDraggingStyle,
 } from "react-beautiful-dnd";
+import ItemList from "./components/ItemList";
 
 export const data = [
   {
@@ -65,7 +66,7 @@ export const columnsFromBackend: ColumnsType = {
 const App: React.FC = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
   const [error, setError] = useState(false);
-  const [indexState, setIndexState] = useState(null);
+  const [indexState, setIndexState] = useState<null | number>(null);
 
   const onDragEnd = (
     result: DropResult,
@@ -130,39 +131,12 @@ const App: React.FC = () => {
       <div style={getContainerStyle}>
         {Object.entries(columns).map(([columId, column], index) => {
           return (
-            <Droppable key={columId} droppableId={columId}>
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  style={getListStyle(snapshot.isDraggingOver, error)}
-                >
-                  {column.items.map((item, index) => (
-                    <Draggable
-                      key={item.id}
-                      draggableId={item.id}
-                      index={index}
-                    >
-                      {(provided, snapshot) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          style={getItemStyle(
-                            snapshot.isDragging,
-                            provided.draggableProps.style,
-                            indexState === index
-                          )}
-                        >
-                          {item.Task}
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+            <ItemList
+              columId={columId}
+              column={column}
+              error={error}
+              indexState={indexState}
+            />
           );
         })}
       </div>
@@ -177,31 +151,5 @@ const getContainerStyle: CSSProperties = {
   alignItems: "center",
   gap: "20px",
 };
-
-const GRID = 8;
-
-const getItemStyle = (
-  isDragging: boolean,
-  draggableStyle: DraggingStyle | NotDraggingStyle,
-  a: boolean
-): CSSProperties => ({
-  userSelect: "none",
-  padding: GRID * 2,
-  margin: `0 0 ${GRID}px 0`,
-  background: isDragging ? "lightgreen" : "grey",
-  fontSize: a ? "40px" : "15px",
-  ...draggableStyle,
-});
-
-const getListStyle = (
-  isDraggingOver: boolean,
-  error: boolean
-): CSSProperties => ({
-  background: isDraggingOver ? (error ? "red" : "lightblue") : "lightgrey",
-
-  padding: GRID,
-  width: 250,
-  minHeight: 500,
-});
 
 export default App;

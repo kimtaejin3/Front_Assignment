@@ -1,98 +1,59 @@
+import { CSSProperties } from "react";
 import {
-  DragDropContext,
-  Droppable,
   Draggable,
-  DropResult,
   DraggingStyle,
+  Droppable,
   NotDraggingStyle,
 } from "react-beautiful-dnd";
-import { useState, useCallback, CSSProperties } from "react";
+import Item from "./Item";
 
-export default function ItemList() {
-  const getItems = (count: number) =>
-    Array.from({ length: count }, (v, k) => k).map((k) => ({
-      id: `item-${k}`,
-      content: `item ${k}`,
-    }));
-
-  const [items, setItems] = useState(getItems(10));
-
-  const reorder = (
-    list: { id: string; content: string }[],
-    startIndex: number,
-    endIndex: number
-  ) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result;
+interface Props {
+  columId: string;
+  column: {
+    title: string;
+    items: {
+      id: string;
+      Task: string;
+      Due_Date: string;
+    }[];
   };
+  error: boolean;
+  indexState: null | number;
+}
 
-  const onDragEnd = useCallback(
-    (result: DropResult) => {
-      if (!result.destination) {
-        return;
-      }
-
-      const newItems = reorder(
-        items,
-        result.source.index,
-        result.destination.index
-      );
-
-      setItems(newItems);
-    },
-    [items]
-  );
+export default function ItemList({
+  columId,
+  column,
+  error,
+  indexState,
+}: Props) {
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="droppable">
-        {(provided, snapshot) => (
-          <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            style={getListStyle(snapshot.isDraggingOver)}
-          >
-            {items.map((item, index) => (
-              <Draggable key={item.id} draggableId={item.id} index={index}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    style={getItemStyle(
-                      snapshot.isDragging,
-                      provided.draggableProps.style
-                    )}
-                  >
-                    {item.content}
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <Droppable key={columId} droppableId={columId}>
+      {(provided, snapshot) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          style={getListStyle(snapshot.isDraggingOver, error)}
+        >
+          {column.items.map((item, index) => (
+            <Item item={item} index={index} indexState={indexState} />
+          ))}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
 }
 
 const GRID = 8;
 
-const getItemStyle = (
-  isDragging: boolean,
-  draggableStyle: DraggingStyle | NotDraggingStyle
+const getListStyle = (
+  isDraggingOver: boolean,
+  error: boolean
 ): CSSProperties => ({
-  userSelect: "none",
-  padding: GRID * 2,
-  margin: `0 0 ${GRID}px 0`,
-  background: isDragging ? "lightgreen" : "grey",
-  ...draggableStyle,
-});
+  background: isDraggingOver ? (error ? "red" : "lightblue") : "lightgrey",
 
-const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
   padding: GRID,
   width: 250,
+  minHeight: 500,
 });
