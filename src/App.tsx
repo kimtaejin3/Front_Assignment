@@ -74,7 +74,8 @@ const App: React.FC = () => {
     setColumns: React.Dispatch<SetStateAction<ColumnsType>>
   ) => {
     const { source, destination } = result;
-    if (source.droppableId === "1" && destination.droppableId === "3") {
+    console.log("source", source);
+    if (source?.droppableId === "1" && destination?.droppableId === "3") {
       setIndexState(null);
       return;
     }
