@@ -88,12 +88,14 @@ const App: React.FC = () => {
       setError(false);
       setIndexState(null);
       setSelectedTasks([]);
+      setDraggingTaskId(null);
       return;
     }
 
     if (indexState) {
       setIndexState(null);
       setSelectedTasks([]);
+      setDraggingTaskId(null);
       return;
     }
 

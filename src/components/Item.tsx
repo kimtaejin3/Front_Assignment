@@ -105,6 +105,11 @@ export default function Item({
   const isGhosting =
     isSelected && Boolean(draggingTaskId) && draggingTaskId !== item.id;
 
+  console.log(
+    `${item.Task}: draggingTaskId/${draggingTaskId},${Boolean(
+      draggingTaskId
+    )} isSelected/${isSelected} isGhosting/${isGhosting}`
+  );
   return (
     <Draggable key={item.id} draggableId={item.id} index={index}>
       {(provided, snapshot) => (
