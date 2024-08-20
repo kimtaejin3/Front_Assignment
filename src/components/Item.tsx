@@ -121,6 +121,9 @@ export default function Item({
           )}
           onClick={onClick}
         >
+          <span style={getTagStyle(snapshot.isDragging)}>
+            {selectedTasks.length === 0 ? 1 : selectedTasks.length}
+          </span>
           {item.Task}
         </div>
       )}
@@ -143,7 +146,22 @@ const getItemStyle = (
   margin: `0 0 ${GRID}px 0`,
   background: isDragging ? "lightgreen" : isSelected ? "blue" : "grey",
   color: a ? "red" : "black",
-  opacity: isGhosting ? "0.5" : "1",
-
+  // opacity: isGhosting ? "0.5" : "1",
+  display: isGhosting ? "none" : "block",
+  position: "relative",
   ...draggableStyle,
+});
+
+const getTagStyle = (isDragging: boolean): CSSProperties => ({
+  display: isDragging ? "flex" : "none",
+  justifyContent: "center",
+  alignItems: "center",
+  position: "absolute",
+  right: "-5px",
+  top: "-5px",
+  backgroundColor: "dodgerblue",
+  width: "20px",
+  height: "20px",
+  borderRadius: "50%",
+  fontSize: "13px",
 });

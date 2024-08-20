@@ -104,6 +104,7 @@ const App: React.FC = () => {
 
     setColumns(processed);
     setDraggingTaskId(null);
+    setSelectedTasks([]);
   };
 
   const onBeforeCapture = (start: BeforeCapture) => {
@@ -129,7 +130,7 @@ const App: React.FC = () => {
         const destColumn = columns[result.destination?.droppableId];
         const destItem = destColumn?.items[result.destination?.index];
 
-        console.log("destColumn:", destColumn);
+        console.log("destItem:", destItem);
 
         if (
           sourceDraggedItem?.id !== destItem?.id &&
