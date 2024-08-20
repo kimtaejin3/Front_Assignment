@@ -84,8 +84,13 @@ const App: React.FC = () => {
     const destination = result.destination;
     const source = result.source;
 
-    if (source.droppableId === "1" && destination.droppableId === "3") {
+    if (source?.droppableId === "1" && destination?.droppableId === "3") {
       setError(false);
+      setIndexState(null);
+      return;
+    }
+
+    if (indexState) {
       setIndexState(null);
       return;
     }
@@ -124,22 +129,25 @@ const App: React.FC = () => {
         const destColumn = columns[result.destination?.droppableId];
         const destItem = destColumn?.items[result.destination?.index];
 
-        console.log("sourceDraggedItem:", sourceDraggedItem);
-        console.log("destItem", destItem);
-
-        if (sourceDraggedItem?.isEven && destItem?.isEven) {
-          console.log("error");
-        }
+        console.log("destColumn:", destColumn);
 
         if (
-          result.destination?.droppableId === "3" &&
-          result.source?.droppableId === "1"
+          sourceDraggedItem?.id !== destItem?.id &&
+          sourceDraggedItem?.isEven &&
+          destItem?.isEven
         ) {
           setIndexState(sourceDraggedItem.id);
-          setError(true);
         } else {
-          setIndexState(null);
-          setError(false);
+          if (
+            result.destination?.droppableId === "3" &&
+            result.source?.droppableId === "1"
+          ) {
+            setIndexState(sourceDraggedItem.id);
+            setError(true);
+          } else {
+            setIndexState(null);
+            setError(false);
+          }
         }
       }}
     >

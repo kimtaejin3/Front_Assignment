@@ -26,7 +26,10 @@ const reorderSingleDrag = ({ columns, source, destination }: Args) => {
 
     const updated = {
       ...columns,
-      [source.droppableId]: { ...column, items: reordered },
+      [source.droppableId]: {
+        title: idTitleMap[destination.droppableId as "1" | "2" | "3" | "4"],
+        items: reordered,
+      },
     };
 
     return updated as ColumnsType;
@@ -49,8 +52,14 @@ const reorderSingleDrag = ({ columns, source, destination }: Args) => {
 
   const updated = {
     ...columns,
-    [source.droppableId]: { ...columns, items: newSourceColumnItems },
-    [destination.droppableId]: { ...columns, items: newDestColumnItems },
+    [source.droppableId]: {
+      title: idTitleMap[destination.droppableId as "1" | "2" | "3" | "4"],
+      items: newSourceColumnItems,
+    },
+    [destination.droppableId]: {
+      title: idTitleMap[destination.droppableId as "1" | "2" | "3" | "4"],
+      items: newDestColumnItems,
+    },
   };
 
   return updated as ColumnsType;
@@ -185,3 +194,5 @@ export const mutliDragAwareReorder = (args: Args) => {
 
   return reorderSingleDrag(args);
 };
+
+// export const

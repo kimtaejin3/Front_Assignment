@@ -142,7 +142,7 @@ const getItemStyle = (
   padding: GRID * 2,
   margin: `0 0 ${GRID}px 0`,
   background: isDragging ? "lightgreen" : isSelected ? "blue" : "grey",
-  fontSize: a ? "40px" : "15px",
+  color: a ? "red" : "black",
   opacity: isGhosting ? "0.5" : "1",
 
   ...draggableStyle,
