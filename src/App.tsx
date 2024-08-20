@@ -154,6 +154,36 @@ const App: React.FC = () => {
 
         if (selectedTasks.length > 0) {
           console.log("zooya:", selectedTasks[selectedTasks.length - 1]);
+          if (
+            sourceColumn === destColumn &&
+            selectedTasks[selectedTasks.length - 1]?.isEven &&
+            destItem?.dibsOrder !== null &&
+            selectedTasks[selectedTasks.length - 1]?.order < destItem?.dibsOrder
+          ) {
+            setIndexState(sourceDraggedItem.id);
+            return;
+          }
+
+          if (
+            sourceColumn === destColumn &&
+            selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
+            selectedTasks[selectedTasks.length - 1]?.isEven &&
+            destItem?.isEven &&
+            selectedTasks[selectedTasks.length - 1].order > destItem.order
+          ) {
+            setIndexState(sourceDraggedItem.id);
+            return;
+          }
+
+          if (
+            sourceColumn !== destColumn &&
+            selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
+            selectedTasks[selectedTasks.length - 1]?.isEven &&
+            destItem?.isEven
+          ) {
+            setIndexState(sourceDraggedItem.id);
+            return;
+          }
         }
 
         if (
@@ -162,8 +192,17 @@ const App: React.FC = () => {
           destItem?.dibsOrder !== null &&
           sourceDraggedItem?.order < destItem?.dibsOrder
         ) {
-          console.log("2");
+          setIndexState(sourceDraggedItem.id);
+          return;
+        }
 
+        if (
+          sourceColumn === destColumn &&
+          sourceDraggedItem?.id !== destItem?.id &&
+          sourceDraggedItem?.isEven &&
+          destItem?.isEven &&
+          sourceDraggedItem.order > destItem.order
+        ) {
           setIndexState(sourceDraggedItem.id);
           return;
         }
@@ -173,16 +212,6 @@ const App: React.FC = () => {
           sourceDraggedItem?.id !== destItem?.id &&
           sourceDraggedItem?.isEven &&
           destItem?.isEven
-        ) {
-          setIndexState(sourceDraggedItem.id);
-          return;
-        }
-
-        if (
-          sourceDraggedItem?.id !== destItem?.id &&
-          sourceDraggedItem?.isEven &&
-          destItem?.isEven &&
-          sourceDraggedItem.order > destItem.order
         ) {
           setIndexState(sourceDraggedItem.id);
           return;
