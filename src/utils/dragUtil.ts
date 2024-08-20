@@ -184,6 +184,7 @@ export const reconcilateColumnItems = (itemList: ColumnsType) => {
       },
     });
   });
+  //TODO: 더 나은 방법 생각해보기 or 함수로 분리
   Object.entries(temp).forEach(([columnId, value], index) => {
     Object.assign(temp, {
       ...temp,
@@ -209,6 +210,7 @@ export const mutliDragAwareReorder = (args: Args) => {
   if (args.selectedTasks.length > 1) {
     const newColumn = reorderMultiDrag(args);
     const reconcilatedColumn = reconcilateColumnItems(newColumn);
+    console.log("result:", reconcilatedColumn);
 
     return reconcilatedColumn;
   }
@@ -216,5 +218,6 @@ export const mutliDragAwareReorder = (args: Args) => {
   const newColumn = reorderSingleDrag(args);
   const reconcilatedColumn = reconcilateColumnItems(newColumn);
 
+  console.log("result:", reconcilatedColumn);
   return reconcilatedColumn;
 };

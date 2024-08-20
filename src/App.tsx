@@ -92,6 +92,8 @@ const App: React.FC = () => {
   const [selectedTasks, setSelectedTasks] = useState<Item[]>([]);
   const [draggingTaskId, setDraggingTaskId] = useState(null);
 
+  console.log("columns:", columns);
+
   const onDragEnd = (
     result: DropResult,
     columns: ColumnsType,
@@ -151,18 +153,21 @@ const App: React.FC = () => {
         const destItem = destColumn?.items[result.destination?.index];
 
         if (
-          sourceDraggedItem?.id !== destItem?.id &&
           sourceDraggedItem?.isEven &&
-          destItem?.isEven
+          destItem?.dibsOrder !== null &&
+          sourceDraggedItem?.order < destItem?.dibsOrder
         ) {
+          console.log("2");
+
           setIndexState(sourceDraggedItem.id);
           return;
         }
 
         if (
+          sourceDraggedItem?.id !== destItem?.id &&
           sourceDraggedItem?.isEven &&
-          destItem?.dibsOrder !== null &&
-          sourceDraggedItem?.order < destItem?.dibsOrder
+          destItem?.isEven &&
+          sourceDraggedItem.order > destItem.order
         ) {
           setIndexState(sourceDraggedItem.id);
           return;
