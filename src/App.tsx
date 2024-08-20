@@ -2,6 +2,7 @@ import { CSSProperties, SetStateAction, useState } from "react";
 import {
   BeforeCapture,
   DragDropContext,
+  DragStart,
   DropResult,
 } from "react-beautiful-dnd";
 import ItemList from "./components/ItemList";
@@ -140,10 +141,15 @@ const App: React.FC = () => {
     setDraggingTaskId(draggableId);
   };
 
+  const onDragStart = (start: DragStart) => {
+    selectedTasks[selectedTasks.length - 1];
+  };
+
   return (
     <DragDropContext
       onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
       onBeforeCapture={(start) => onBeforeCapture(start)}
+      onDragStart={(start) => onDragStart(start)}
       onDragUpdate={(result) => {
         const sourceColumn = columns[result.source?.droppableId];
         //dragged
@@ -153,35 +159,14 @@ const App: React.FC = () => {
         const destItem = destColumn?.items[result.destination?.index];
 
         if (selectedTasks.length > 0) {
-          console.log("zooya:", selectedTasks[selectedTasks.length - 1]);
-          console.log("destItem:", destItem);
-          if (
-            sourceColumn === destColumn &&
-            selectedTasks[selectedTasks.length - 1]?.isEven &&
-            destItem?.dibsOrder !== null &&
-            selectedTasks[selectedTasks.length - 1]?.order < destItem?.dibsOrder
-          ) {
-            setIndexState(sourceDraggedItem.id);
-            return;
-          }
-
-          if (
-            sourceColumn === destColumn &&
-            // selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
-            selectedTasks[selectedTasks.length - 1]?.isEven &&
-            destItem?.isEven &&
-            selectedTasks[selectedTasks.length - 1].order > destItem.order
-          ) {
-            setIndexState(sourceDraggedItem.id);
-            return;
-          }
-
           if (
             sourceColumn !== destColumn &&
             selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
             selectedTasks[selectedTasks.length - 1]?.isEven &&
             destItem?.isEven
           ) {
+            console.log("3");
+
             setIndexState(sourceDraggedItem.id);
             return;
           }

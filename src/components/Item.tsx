@@ -109,12 +109,7 @@ export default function Item({
     isSelected && Boolean(draggingTaskId) && draggingTaskId !== item.id;
 
   return (
-    <Draggable
-      key={item.id}
-      draggableId={item.id}
-      index={index}
-      isDragDisabled={isGhosting}
-    >
+    <Draggable key={item.id} draggableId={item.id} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
