@@ -87,11 +87,13 @@ const App: React.FC = () => {
     if (source?.droppableId === "1" && destination?.droppableId === "3") {
       setError(false);
       setIndexState(null);
+      setSelectedTasks([]);
       return;
     }
 
     if (indexState) {
       setIndexState(null);
+      setSelectedTasks([]);
       return;
     }
 
