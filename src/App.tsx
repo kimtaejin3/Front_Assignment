@@ -134,8 +134,6 @@ const App: React.FC = () => {
         const destColumn = columns[result.destination?.droppableId];
         const destItem = destColumn?.items[result.destination?.index];
 
-        console.log("destItem:", destItem);
-
         if (
           sourceDraggedItem?.id !== destItem?.id &&
           sourceDraggedItem?.isEven &&
