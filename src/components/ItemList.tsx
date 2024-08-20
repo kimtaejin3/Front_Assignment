@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, Dispatch, SetStateAction } from "react";
 import {
   Draggable,
   DraggingStyle,
@@ -19,6 +19,9 @@ interface Props {
   };
   error: boolean;
   indexState: null | number;
+  selectedTasksId: string[];
+  onSetSelectedTasksId: React.Dispatch<SetStateAction<string[]>>;
+  draggingTaskId: string;
 }
 
 export default function ItemList({
@@ -26,6 +29,9 @@ export default function ItemList({
   column,
   error,
   indexState,
+  selectedTasksId,
+  onSetSelectedTasksId,
+  draggingTaskId,
 }: Props) {
   return (
     <Droppable key={columId} droppableId={columId}>
@@ -36,7 +42,14 @@ export default function ItemList({
           style={getListStyle(snapshot.isDraggingOver, error)}
         >
           {column.items.map((item, index) => (
-            <Item item={item} index={index} indexState={indexState} />
+            <Item
+              item={item}
+              index={index}
+              indexState={indexState}
+              selectedTasksId={selectedTasksId}
+              onSetSelectedTasksId={onSetSelectedTasksId}
+              draggingTaskId={draggingTaskId}
+            />
           ))}
           {provided.placeholder}
         </div>

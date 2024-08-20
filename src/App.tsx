@@ -1,11 +1,8 @@
-import { CSSProperties, SetStateAction, useEffect, useState } from "react";
+import { CSSProperties, SetStateAction, useState } from "react";
 import {
+  BeforeCapture,
   DragDropContext,
-  Draggable,
-  DraggingStyle,
-  Droppable,
   DropResult,
-  NotDraggingStyle,
 } from "react-beautiful-dnd";
 import ItemList from "./components/ItemList";
 
@@ -67,6 +64,8 @@ const App: React.FC = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
   const [error, setError] = useState(false);
   const [indexState, setIndexState] = useState<null | number>(null);
+  const [selectedTaskIds, setSelectedTaskIds] = useState<string[]>([]);
+  const [draggingTaskId, setDraggingTaskId] = useState(null);
 
   const onDragEnd = (
     result: DropResult,
@@ -79,7 +78,7 @@ const App: React.FC = () => {
       setIndexState(null);
       return;
     }
-    if (source.droppableId !== destination.droppableId) {
+    if (source?.droppableId !== destination?.droppableId) {
       const sourceColumn = columns[source.droppableId];
       const destColumn = columns[destination.droppableId];
       const sourceItems = [...sourceColumn.items];
@@ -112,9 +111,22 @@ const App: React.FC = () => {
     }
   };
 
+  const onBeforeCapture = (start: BeforeCapture) => {
+    const draggableId = start.draggableId;
+    const selected = selectedTaskIds.find((taskId) => taskId === draggableId);
+
+    // if dragging an item that is not selected - unselect all items
+    if (!selected) {
+      setSelectedTaskIds([]);
+    }
+
+    setDraggingTaskId(draggableId);
+  };
+
   return (
     <DragDropContext
       onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+      onBeforeCapture={(start) => onBeforeCapture(start)}
       onDragUpdate={(result) => {
         if (
           result.destination?.droppableId === "3" &&
@@ -131,13 +143,16 @@ const App: React.FC = () => {
       }}
     >
       <div style={getContainerStyle}>
-        {Object.entries(columns).map(([columId, column], index) => {
+        {Object.entries(columns).map(([columId, column]) => {
           return (
             <ItemList
               columId={columId}
               column={column}
               error={error}
               indexState={indexState}
+              selectedTasksId={selectedTaskIds}
+              onSetSelectedTasksId={setSelectedTaskIds}
+              draggingTaskId={draggingTaskId}
             />
           );
         })}
