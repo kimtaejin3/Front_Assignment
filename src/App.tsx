@@ -76,6 +76,7 @@ const App: React.FC = () => {
     console.log("source", source);
     if (source?.droppableId === "1" && destination?.droppableId === "3") {
       setIndexState(null);
+      setError(false);
       return;
     }
     if (source?.droppableId !== destination?.droppableId) {
