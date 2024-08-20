@@ -155,6 +155,15 @@ const App: React.FC = () => {
         }
 
         if (
+          sourceDraggedItem?.isEven &&
+          destItem?.dibsOrder !== null &&
+          sourceDraggedItem?.order < destItem?.dibsOrder
+        ) {
+          setIndexState(sourceDraggedItem.id);
+          return;
+        }
+
+        if (
           result.destination?.droppableId === "3" &&
           result.source?.droppableId === "1"
         ) {
