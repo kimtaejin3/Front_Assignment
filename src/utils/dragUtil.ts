@@ -35,18 +35,14 @@ const reorderSingleDrag = ({ columns, source, destination }: Args) => {
     return updated as ColumnsType;
   }
 
-  // moving to a new list
   const sourceColumn = columns[source.droppableId];
   const destColumns = columns[destination.droppableId];
 
-  // the id of the task to be moved
   const sourceItem = sourceColumn.items[source.index];
 
-  // remove from home column
   const newSourceColumnItems = [...sourceColumn.items];
   newSourceColumnItems.splice(source.index, 1);
 
-  // add to foreign column
   const newDestColumnItems = [...destColumns.items];
   newDestColumnItems.splice(destination.index, 0, sourceItem);
 
@@ -80,9 +76,7 @@ const reorderMultiDrag = ({
   source,
   destination,
 }: Args) => {
-  //start
   const sourceColumn = columns[source.droppableId];
-  //dragged
   const sourceDraggedItem = sourceColumn.items[source.index];
 
   const insertAtIndex = (() => {
@@ -93,7 +87,6 @@ const reorderMultiDrag = ({
           return previous;
         }
 
-        //final
         const DestColumn = columns[destination.droppableId];
         const column = getHomeColumn(columns, current);
 
@@ -107,8 +100,6 @@ const reorderMultiDrag = ({
           return previous;
         }
 
-        // the selected item is before the destination index
-        // we need to account for this when inserting into the new location
         return previous + 1;
       }, 0);
 
@@ -116,14 +107,11 @@ const reorderMultiDrag = ({
     return result;
   })();
 
-  // doing the ordering now as we are required to look up columns
-  // and know original ordering
   const orderedSelectedTasks = [...selectedTasks];
 
   orderedSelectedTasks
     .map((task) => task.id)
     .sort((a, b) => {
-      // moving the dragged item to the top of the list
       if (a === sourceDraggedItem.id) {
         return -1;
       }
@@ -132,7 +120,6 @@ const reorderMultiDrag = ({
         return 1;
       }
 
-      // sorting by their natural indexes
       const columnForA = getHomeColumn(columns, a);
       const indexOfA = columnForA.items.map((item) => item.id).indexOf(a);
       const columnForB = getHomeColumn(columns, b);
@@ -142,20 +129,16 @@ const reorderMultiDrag = ({
         return indexOfA - indexOfB;
       }
 
-      // sorting by their order in the selectedTaskIds list
       return -1;
     });
 
-  // we need to remove all of the selected tasks from their columns
   const withRemovedTasks = Object.keys(columns).reduce((previous, columnId) => {
     const column = columns[columnId];
 
-    // remove the id's of the items that are selected
     const remainingTasks = column.items.filter(
       (item) => !selectedTasks.map((task) => task.id).includes(item.id)
     );
 
-    // previous[columnId] = withNewTaskIds(column, remainingTaskIds);
     previous[columnId] = { ...column, items: remainingTasks };
 
     return previous;
@@ -169,20 +152,13 @@ const reorderMultiDrag = ({
     return base;
   })();
 
-  // insert all selected tasks into final column
   const withAddedTasks: ColumnsType = {
     ...withRemovedTasks,
-    // [final.id]: withNewTaskIds(final, withInserted),
     [destination.droppableId]: {
       title: idTitleMap[destination.droppableId as "1" | "2" | "3" | "4"],
       items: withInserted,
     },
   };
-
-  //   const updated = {
-  //     ...columns,
-  //     columns: { withAddedTasks },
-  //   };
 
   return withAddedTasks;
 };
@@ -242,5 +218,3 @@ export const mutliDragAwareReorder = (args: Args) => {
 
   return reconcilatedColumn;
 };
-
-// export const
