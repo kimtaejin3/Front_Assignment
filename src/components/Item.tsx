@@ -109,7 +109,12 @@ export default function Item({
     isSelected && Boolean(draggingTaskId) && draggingTaskId !== item.id;
 
   return (
-    <Draggable key={item.id} draggableId={item.id} index={index}>
+    <Draggable
+      key={item.id}
+      draggableId={item.id}
+      index={index}
+      isDragDisabled={isGhosting}
+    >
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -124,9 +129,11 @@ export default function Item({
           )}
           onClick={onClick}
         >
-          <span style={getTagStyle(snapshot.isDragging)}>
-            {selectedTasks.length === 0 ? 1 : selectedTasks.length}
-          </span>
+          {selectedTasks.length > 0 && (
+            <span style={getTagStyle(snapshot.isDragging)}>
+              {selectedTasks.length}
+            </span>
+          )}
           {item.Task}
         </div>
       )}

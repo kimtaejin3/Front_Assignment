@@ -154,6 +154,7 @@ const App: React.FC = () => {
 
         if (selectedTasks.length > 0) {
           console.log("zooya:", selectedTasks[selectedTasks.length - 1]);
+          console.log("destItem:", destItem);
           if (
             sourceColumn === destColumn &&
             selectedTasks[selectedTasks.length - 1]?.isEven &&
@@ -166,7 +167,7 @@ const App: React.FC = () => {
 
           if (
             sourceColumn === destColumn &&
-            selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
+            // selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
             selectedTasks[selectedTasks.length - 1]?.isEven &&
             destItem?.isEven &&
             selectedTasks[selectedTasks.length - 1].order > destItem.order
@@ -184,6 +185,19 @@ const App: React.FC = () => {
             setIndexState(sourceDraggedItem.id);
             return;
           }
+
+          if (
+            result.destination?.droppableId === "3" &&
+            result.source?.droppableId === "1"
+          ) {
+            setIndexState(sourceDraggedItem.id);
+            setError(true);
+          } else {
+            setIndexState(null);
+            setError(false);
+          }
+
+          return;
         }
 
         if (
