@@ -11,6 +11,7 @@ export type Item = {
   isEven: boolean;
   order: number;
   dibs?: string | null;
+  dibsOrder?: number | null;
 };
 
 interface Props {

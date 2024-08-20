@@ -151,17 +151,18 @@ const App: React.FC = () => {
           destItem?.isEven
         ) {
           setIndexState(sourceDraggedItem.id);
+          return;
+        }
+
+        if (
+          result.destination?.droppableId === "3" &&
+          result.source?.droppableId === "1"
+        ) {
+          setIndexState(sourceDraggedItem.id);
+          setError(true);
         } else {
-          if (
-            result.destination?.droppableId === "3" &&
-            result.source?.droppableId === "1"
-          ) {
-            setIndexState(sourceDraggedItem.id);
-            setError(true);
-          } else {
-            setIndexState(null);
-            setError(false);
-          }
+          setIndexState(null);
+          setError(false);
         }
       }}
     >

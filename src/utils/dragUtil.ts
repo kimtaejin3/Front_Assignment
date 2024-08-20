@@ -208,6 +208,24 @@ const reconcilateColumnItems = (itemList: ColumnsType) => {
       },
     });
   });
+  Object.entries(temp).forEach(([columnId, value], index) => {
+    Object.assign(temp, {
+      ...temp,
+      [columnId]: {
+        ...value,
+        items: value.items.map((item, index) => {
+          return {
+            ...item,
+
+            dibsOrder:
+              index < value.items.length - 1 && value.items[index + 1].isEven
+                ? value.items[index + 1].order
+                : null,
+          };
+        }),
+      },
+    });
+  });
   return temp;
 };
 
