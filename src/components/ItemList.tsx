@@ -16,8 +16,8 @@ interface Props {
   };
   error: boolean;
   indexState: null | number;
-  selectedTasksId: string[];
-  onSetSelectedTasksId: React.Dispatch<SetStateAction<string[]>>;
+  selectedTasks: ItemType[];
+  onSetSelectedTasks: React.Dispatch<SetStateAction<ItemType[]>>;
   draggingTaskId: string;
 }
 
@@ -26,8 +26,8 @@ export default function ItemList({
   column,
   error,
   indexState,
-  selectedTasksId,
-  onSetSelectedTasksId,
+  selectedTasks,
+  onSetSelectedTasks,
   draggingTaskId,
 }: Props) {
   console.log(`${columId}:${column}`);
@@ -45,8 +45,8 @@ export default function ItemList({
               item={item}
               index={index}
               indexState={indexState}
-              selectedTasksId={selectedTasksId}
-              onSetSelectedTasksId={onSetSelectedTasksId}
+              selectedTasks={selectedTasks}
+              onSetSelectedTasks={onSetSelectedTasks}
               draggingTaskId={draggingTaskId}
             />
           ))}

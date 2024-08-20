@@ -38,6 +38,13 @@ export type ColumnsType = {
   };
 };
 
+export const idTitleMap = {
+  "1": "To-do",
+  "2": "In Progress",
+  "3": "Fail",
+  "4": "Done",
+};
+
 export const columnsFromBackend: ColumnsType = {
   1: {
     title: "To-do",
@@ -61,7 +68,7 @@ const App: React.FC = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
   const [error, setError] = useState(false);
   const [indexState, setIndexState] = useState<null | number>(null);
-  const [selectedTaskIds, setSelectedTaskIds] = useState<string[]>([]);
+  const [selectedTasks, setSelectedTasks] = useState<Item[]>([]);
   const [draggingTaskId, setDraggingTaskId] = useState(null);
 
   const onDragEnd = (
@@ -80,7 +87,7 @@ const App: React.FC = () => {
 
     const processed = mutliDragAwareReorder({
       columns,
-      selectedTaskIds,
+      selectedTasks,
       source,
       destination,
     });
@@ -93,10 +100,10 @@ const App: React.FC = () => {
 
   const onBeforeCapture = (start: BeforeCapture) => {
     const draggableId = start.draggableId;
-    const selected = selectedTaskIds.find((taskId) => taskId === draggableId);
+    const selected = selectedTasks.find((task) => task.id === draggableId);
 
     if (!selected) {
-      setSelectedTaskIds([]);
+      setSelectedTasks([]);
     }
 
     setDraggingTaskId(draggableId);
@@ -130,8 +137,8 @@ const App: React.FC = () => {
               column={column}
               error={error}
               indexState={indexState}
-              selectedTasksId={selectedTaskIds}
-              onSetSelectedTasksId={setSelectedTaskIds}
+              selectedTasks={selectedTasks}
+              onSetSelectedTasks={setSelectedTasks}
               draggingTaskId={draggingTaskId}
             />
           );

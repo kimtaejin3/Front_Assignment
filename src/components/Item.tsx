@@ -14,8 +14,8 @@ interface Props {
   item: Item;
   index: number;
   indexState: number;
-  selectedTasksId: string[];
-  onSetSelectedTasksId: React.Dispatch<SetStateAction<string[]>>;
+  selectedTasks: Item[];
+  onSetSelectedTasks: React.Dispatch<SetStateAction<Item[]>>;
   draggingTaskId: string;
 }
 
@@ -24,25 +24,25 @@ export default function Item({
   item,
   index,
   indexState,
-  selectedTasksId,
-  onSetSelectedTasksId,
+  selectedTasks,
+  onSetSelectedTasks,
   draggingTaskId,
 }: Props) {
-  const toggleSelectionInGroup = (taskId: string) => {
-    const index = selectedTasksId.indexOf(taskId);
+  const toggleSelectionInGroup = (task: Item) => {
+    const index = selectedTasks.map((task) => task.id).indexOf(task.id);
 
     // if not selected - add it to the selected items
     if (index === -1) {
-      onSetSelectedTasksId([...selectedTasksId, taskId]);
+      onSetSelectedTasks([...selectedTasks, task]);
 
       return;
     }
 
     // it was previously selected and now needs to be removed from the group
-    const shallow = [...selectedTasksId];
+    const shallow = [...selectedTasks];
     shallow.splice(index, 1);
 
-    onSetSelectedTasksId(shallow);
+    onSetSelectedTasks(shallow);
   };
 
   const wasToggleInSelectionGroupKeyUsed = (
@@ -52,20 +52,20 @@ export default function Item({
     return isUsingWindows ? e.ctrlKey : e.metaKey;
   };
 
-  const toggleSelection = (taskId: string) => {
-    const wasSelected = selectedTasksId.includes(taskId);
+  const toggleSelection = (task: Item) => {
+    const wasSelected = selectedTasks.map((task) => task.id).includes(task.id);
 
     const newTaskIds = (() => {
       // Task was not previously selected
       // now will be the only selected item
       if (!wasSelected) {
-        return [taskId];
+        return [task];
       }
 
       // Task was part of a selected group
       // will now become the only selected item
-      if (selectedTasksId.length > 1) {
-        return [taskId];
+      if (selectedTasks.length > 1) {
+        return [task];
       }
 
       // task was previously selected but not in a group
@@ -73,7 +73,7 @@ export default function Item({
       return [];
     })();
 
-    onSetSelectedTasksId(newTaskIds);
+    onSetSelectedTasks(newTaskIds);
   };
 
   const performAction = (
@@ -81,11 +81,11 @@ export default function Item({
     item: Item
   ) => {
     if (wasToggleInSelectionGroupKeyUsed(e)) {
-      toggleSelectionInGroup(item.id);
+      toggleSelectionInGroup(item);
       return;
     }
 
-    toggleSelection(item.id);
+    toggleSelection(item);
   };
 
   const onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -97,8 +97,8 @@ export default function Item({
     performAction(e, item);
   };
 
-  const isSelected = selectedTasksId.some(
-    (selectedTaskId) => selectedTaskId === item.id
+  const isSelected = selectedTasks.some(
+    (selectedTask) => selectedTask.id === item.id
   );
 
   const isGhosting =

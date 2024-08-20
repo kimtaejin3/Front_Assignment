@@ -1,10 +1,10 @@
 import { DraggableLocation } from "react-beautiful-dnd";
-import { ColumnsType } from "../App";
+import { ColumnsType, idTitleMap } from "../App";
 import type { Item } from "../components/Item";
 
 type Args = {
   columns: ColumnsType;
-  selectedTaskIds: string[];
+  selectedTasks: Item[];
   source: DraggableLocation;
   destination: DraggableLocation;
 };
@@ -67,7 +67,7 @@ export const getHomeColumn = (columns: ColumnsType, currentId: string) => {
 
 const reorderMultiDrag = ({
   columns,
-  selectedTaskIds,
+  selectedTasks,
   source,
   destination,
 }: Args) => {
@@ -77,8 +77,9 @@ const reorderMultiDrag = ({
   const sourceDraggedItem = sourceColumn.items[source.index];
 
   const insertAtIndex = (() => {
-    const destinationIndexOffset = selectedTaskIds.reduce(
-      (previous, current) => {
+    const destinationIndexOffset = selectedTasks
+      .map((task) => task.id)
+      .reduce((previous, current) => {
         if (current === sourceDraggedItem.id) {
           return previous;
         }
@@ -100,9 +101,7 @@ const reorderMultiDrag = ({
         // the selected item is before the destination index
         // we need to account for this when inserting into the new location
         return previous + 1;
-      },
-      0
-    );
+      }, 0);
 
     const result = destination.index - destinationIndexOffset;
     return result;
@@ -110,31 +109,33 @@ const reorderMultiDrag = ({
 
   // doing the ordering now as we are required to look up columns
   // and know original ordering
-  const orderedSelectedTaskIds = [...selectedTaskIds];
+  const orderedSelectedTasks = [...selectedTasks];
 
-  orderedSelectedTaskIds.sort((a, b) => {
-    // moving the dragged item to the top of the list
-    if (a === sourceDraggedItem.id) {
+  orderedSelectedTasks
+    .map((task) => task.id)
+    .sort((a, b) => {
+      // moving the dragged item to the top of the list
+      if (a === sourceDraggedItem.id) {
+        return -1;
+      }
+
+      if (b === sourceDraggedItem.id) {
+        return 1;
+      }
+
+      // sorting by their natural indexes
+      const columnForA = getHomeColumn(columns, a);
+      const indexOfA = columnForA.items.map((item) => item.id).indexOf(a);
+      const columnForB = getHomeColumn(columns, b);
+      const indexOfB = columnForB.items.map((item) => item.id).indexOf(b);
+
+      if (indexOfA !== indexOfB) {
+        return indexOfA - indexOfB;
+      }
+
+      // sorting by their order in the selectedTaskIds list
       return -1;
-    }
-
-    if (b === sourceDraggedItem.id) {
-      return 1;
-    }
-
-    // sorting by their natural indexes
-    const columnForA = getHomeColumn(columns, a);
-    const indexOfA = columnForA.items.map((item) => item.id).indexOf(a);
-    const columnForB = getHomeColumn(columns, b);
-    const indexOfB = columnForB.items.map((item) => item.id).indexOf(b);
-
-    if (indexOfA !== indexOfB) {
-      return indexOfA - indexOfB;
-    }
-
-    // sorting by their order in the selectedTaskIds list
-    return -1;
-  });
+    });
 
   // we need to remove all of the selected tasks from their columns
   const withRemovedTasks = Object.keys(columns).reduce((previous, columnId) => {
@@ -142,7 +143,7 @@ const reorderMultiDrag = ({
 
     // remove the id's of the items that are selected
     const remainingTasks = column.items.filter(
-      (item) => !selectedTaskIds.includes(item.id)
+      (item) => !selectedTasks.map((task) => task.id).includes(item.id)
     );
 
     // previous[columnId] = withNewTaskIds(column, remainingTaskIds);
@@ -153,18 +154,20 @@ const reorderMultiDrag = ({
 
   const final = withRemovedTasks[destination.droppableId];
 
-  // const withInserted = (() => {
-  //   const base = [...final.items];
-  //   base.splice(insertAtIndex, 0, ...orderedSelectedTaskIds);
-  //   return base;
-  // })();
-  console.log("check:", orderedSelectedTaskIds);
+  const withInserted = (() => {
+    const base = [...final.items];
+    base.splice(insertAtIndex, 0, ...orderedSelectedTasks);
+    return base;
+  })();
 
   // insert all selected tasks into final column
   const withAddedTasks: ColumnsType = {
     ...withRemovedTasks,
     // [final.id]: withNewTaskIds(final, withInserted),
-    // [destination.droppableId]: ,
+    [destination.droppableId]: {
+      title: idTitleMap[destination.droppableId as "1" | "2" | "3" | "4"],
+      items: withInserted,
+    },
   };
 
   //   const updated = {
@@ -176,7 +179,7 @@ const reorderMultiDrag = ({
 };
 
 export const mutliDragAwareReorder = (args: Args) => {
-  if (args.selectedTaskIds.length > 1) {
+  if (args.selectedTasks.length > 1) {
     return reorderMultiDrag(args);
   }
 
