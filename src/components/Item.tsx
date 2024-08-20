@@ -8,12 +8,13 @@ import {
 export type Item = {
   id: string;
   Task: string;
+  isEven: boolean;
 };
 
 interface Props {
   item: Item;
   index: number;
-  indexState: number;
+  indexState: string;
   selectedTasks: Item[];
   onSetSelectedTasks: React.Dispatch<SetStateAction<Item[]>>;
   draggingTaskId: string;
@@ -114,7 +115,7 @@ export default function Item({
           style={getItemStyle(
             snapshot.isDragging,
             provided.draggableProps.style,
-            indexState === index,
+            indexState === item.id,
             isSelected,
             isGhosting
           )}

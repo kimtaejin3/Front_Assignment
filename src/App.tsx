@@ -11,23 +11,28 @@ import type { Item } from "./components/Item";
 export const data = [
   {
     id: "1",
-    Task: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent.",
+    Task: "Item2",
+    isEven: true,
   },
   {
     id: "2",
-    Task: "Fix Styling",
+    Task: "Item1",
+    isEven: false,
   },
   {
     id: "3",
-    Task: "Handle Door Specs",
+    Task: "Item4",
+    isEven: true,
   },
   {
     id: "4",
-    Task: "morbi",
+    Task: "Item7",
+    isEven: false,
   },
   {
     id: "5",
-    Task: "proin",
+    Task: "Item9",
+    isEven: false,
   },
 ];
 
@@ -67,7 +72,7 @@ export const columnsFromBackend: ColumnsType = {
 const App: React.FC = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
   const [error, setError] = useState(false);
-  const [indexState, setIndexState] = useState<null | number>(null);
+  const [indexState, setIndexState] = useState<null | string>(null);
   const [selectedTasks, setSelectedTasks] = useState<Item[]>([]);
   const [draggingTaskId, setDraggingTaskId] = useState(null);
 
@@ -79,9 +84,9 @@ const App: React.FC = () => {
     const destination = result.destination;
     const source = result.source;
 
-    // nothing to do
-    if (!destination || result.reason === "CANCEL") {
-      setDraggingTaskId(null);
+    if (source.droppableId === "1" && destination.droppableId === "3") {
+      setError(false);
+      setIndexState(null);
       return;
     }
 
@@ -91,8 +96,6 @@ const App: React.FC = () => {
       source,
       destination,
     });
-
-    console.log("onDragEnd", processed);
 
     setColumns(processed);
     setDraggingTaskId(null);
@@ -114,18 +117,30 @@ const App: React.FC = () => {
       onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
       onBeforeCapture={(start) => onBeforeCapture(start)}
       onDragUpdate={(result) => {
+        const sourceColumn = columns[result.source?.droppableId];
+        //dragged
+        const sourceDraggedItem = sourceColumn?.items[result.source?.index];
+
+        const destColumn = columns[result.destination?.droppableId];
+        const destItem = destColumn?.items[result.destination?.index];
+
+        console.log("sourceDraggedItem:", sourceDraggedItem);
+        console.log("destItem", destItem);
+
+        if (sourceDraggedItem?.isEven && destItem?.isEven) {
+          console.log("error");
+        }
+
         if (
           result.destination?.droppableId === "3" &&
           result.source?.droppableId === "1"
         ) {
-          setIndexState(result.source.index);
+          setIndexState(sourceDraggedItem.id);
           setError(true);
         } else {
           setIndexState(null);
           setError(false);
         }
-
-        console.log(result);
       }}
     >
       <div style={getContainerStyle}>

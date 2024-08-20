@@ -15,7 +15,7 @@ interface Props {
     items: ItemType[];
   };
   error: boolean;
-  indexState: null | number;
+  indexState: null | string;
   selectedTasks: ItemType[];
   onSetSelectedTasks: React.Dispatch<SetStateAction<ItemType[]>>;
   draggingTaskId: string;
@@ -30,7 +30,6 @@ export default function ItemList({
   onSetSelectedTasks,
   draggingTaskId,
 }: Props) {
-  console.log(`${columId}:${column}`);
   return (
     <Droppable key={columId} droppableId={columId}>
       {(provided, snapshot) => (
