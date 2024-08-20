@@ -152,13 +152,28 @@ const App: React.FC = () => {
         const destColumn = columns[result.destination?.droppableId];
         const destItem = destColumn?.items[result.destination?.index];
 
+        if (selectedTasks.length > 0) {
+          console.log("zooya:", selectedTasks[selectedTasks.length - 1]);
+        }
+
         if (
+          sourceColumn === destColumn &&
           sourceDraggedItem?.isEven &&
           destItem?.dibsOrder !== null &&
           sourceDraggedItem?.order < destItem?.dibsOrder
         ) {
           console.log("2");
 
+          setIndexState(sourceDraggedItem.id);
+          return;
+        }
+
+        if (
+          sourceColumn !== destColumn &&
+          sourceDraggedItem?.id !== destItem?.id &&
+          sourceDraggedItem?.isEven &&
+          destItem?.isEven
+        ) {
           setIndexState(sourceDraggedItem.id);
           return;
         }
