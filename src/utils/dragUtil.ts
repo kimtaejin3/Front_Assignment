@@ -233,7 +233,6 @@ export const mutliDragAwareReorder = (args: Args) => {
   if (args.selectedTasks.length > 1) {
     const newColumn = reorderMultiDrag(args);
     const reconcilatedColumn = reconcilateColumnItems(newColumn);
-    console.log("result:", reconcilatedColumn);
 
     return reconcilatedColumn;
   }
@@ -241,7 +240,6 @@ export const mutliDragAwareReorder = (args: Args) => {
   const newColumn = reorderSingleDrag(args);
   const reconcilatedColumn = reconcilateColumnItems(newColumn);
 
-  console.log("result:", reconcilatedColumn);
   return reconcilatedColumn;
 };
 
