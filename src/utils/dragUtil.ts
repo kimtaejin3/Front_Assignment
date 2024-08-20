@@ -187,12 +187,44 @@ const reorderMultiDrag = ({
   return withAddedTasks;
 };
 
+const reconcilateColumnItems = (itemList: ColumnsType) => {
+  const temp = { ...itemList };
+  Object.entries(temp).forEach(([columnId, value], index) => {
+    Object.assign(temp, {
+      ...temp,
+      [columnId]: {
+        ...value,
+        items: value.items.map((item, index) => {
+          return {
+            ...item,
+            column: columnId,
+            order: index + 1,
+            dibs:
+              index < value.items.length - 1 && value.items[index + 1].isEven
+                ? value.items[index + 1].id
+                : null,
+          };
+        }),
+      },
+    });
+  });
+  return temp;
+};
+
 export const mutliDragAwareReorder = (args: Args) => {
   if (args.selectedTasks.length > 1) {
-    return reorderMultiDrag(args);
+    const newColumn = reorderMultiDrag(args);
+    const reconcilatedColumn = reconcilateColumnItems(newColumn);
+    console.log("result:", reconcilatedColumn);
+
+    return reconcilatedColumn;
   }
 
-  return reorderSingleDrag(args);
+  const newColumn = reorderSingleDrag(args);
+  const reconcilatedColumn = reconcilateColumnItems(newColumn);
+
+  console.log("result:", reconcilatedColumn);
+  return reconcilatedColumn;
 };
 
 // export const

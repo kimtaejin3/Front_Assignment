@@ -9,6 +9,8 @@ export type Item = {
   id: string;
   Task: string;
   isEven: boolean;
+  order: number;
+  dibs?: string | null;
 };
 
 interface Props {

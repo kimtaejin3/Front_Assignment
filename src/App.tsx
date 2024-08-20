@@ -13,26 +13,36 @@ export const data = [
     id: "1",
     Task: "Item2",
     isEven: true,
+    column: 1,
+    order: 1,
   },
   {
     id: "2",
     Task: "Item1",
     isEven: false,
+    column: 2,
+    order: 2,
   },
   {
     id: "3",
     Task: "Item4",
     isEven: true,
+    column: 3,
+    order: 3,
   },
   {
     id: "4",
     Task: "Item7",
     isEven: false,
+    column: 4,
+    order: 4,
   },
   {
     id: "5",
     Task: "Item9",
     isEven: false,
+    column: 5,
+    order: 5,
   },
 ];
 
@@ -72,6 +82,7 @@ export const columnsFromBackend: ColumnsType = {
 const App: React.FC = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
   const [error, setError] = useState(false);
+  //TODO: indexState 변수이름 변경
   const [indexState, setIndexState] = useState<null | string>(null);
   const [selectedTasks, setSelectedTasks] = useState<Item[]>([]);
   const [draggingTaskId, setDraggingTaskId] = useState(null);
