@@ -5,7 +5,10 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import ItemList from "./components/ItemList";
-import { mutliDragAwareReorder } from "./utils/dragUtil";
+import {
+  mutliDragAwareReorder,
+  reconcilateColumnItems,
+} from "./utils/dragUtil";
 import type { Item } from "./components/Item";
 
 export const data = [
@@ -80,7 +83,9 @@ export const columnsFromBackend: ColumnsType = {
 };
 
 const App: React.FC = () => {
-  const [columns, setColumns] = useState(columnsFromBackend);
+  const [columns, setColumns] = useState(
+    reconcilateColumnItems(columnsFromBackend)
+  );
   const [error, setError] = useState(false);
   //TODO: indexState 변수이름 변경
   const [indexState, setIndexState] = useState<null | string>(null);

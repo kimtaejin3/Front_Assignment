@@ -187,7 +187,7 @@ const reorderMultiDrag = ({
   return withAddedTasks;
 };
 
-const reconcilateColumnItems = (itemList: ColumnsType) => {
+export const reconcilateColumnItems = (itemList: ColumnsType) => {
   const temp = { ...itemList };
   Object.entries(temp).forEach(([columnId, value], index) => {
     Object.assign(temp, {
