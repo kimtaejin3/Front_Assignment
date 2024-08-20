@@ -6,16 +6,13 @@ import {
   NotDraggingStyle,
 } from "react-beautiful-dnd";
 import Item from "./Item";
+import type { Item as ItemType } from "./Item";
 
 interface Props {
   columId: string;
   column: {
     title: string;
-    items: {
-      id: string;
-      Task: string;
-      Due_Date: string;
-    }[];
+    items: ItemType[];
   };
   error: boolean;
   indexState: null | number;
@@ -33,6 +30,7 @@ export default function ItemList({
   onSetSelectedTasksId,
   draggingTaskId,
 }: Props) {
+  console.log(`${columId}:${column}`);
   return (
     <Droppable key={columId} droppableId={columId}>
       {(provided, snapshot) => (
@@ -43,6 +41,7 @@ export default function ItemList({
         >
           {column.items.map((item, index) => (
             <Item
+              key={item.id}
               item={item}
               index={index}
               indexState={indexState}

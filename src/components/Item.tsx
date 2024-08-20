@@ -5,10 +5,9 @@ import {
   NotDraggingStyle,
 } from "react-beautiful-dnd";
 
-type Item = {
+export type Item = {
   id: string;
   Task: string;
-  Due_Date: string;
 };
 
 interface Props {

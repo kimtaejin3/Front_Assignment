@@ -5,39 +5,36 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import ItemList from "./components/ItemList";
+import { mutliDragAwareReorder } from "./utils/dragUtil";
+import type { Item } from "./components/Item";
 
 export const data = [
   {
     id: "1",
     Task: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent.",
-    Due_Date: "25-May-2020",
   },
   {
     id: "2",
     Task: "Fix Styling",
-    Due_Date: "26-May-2020",
   },
   {
     id: "3",
     Task: "Handle Door Specs",
-    Due_Date: "27-May-2020",
   },
   {
     id: "4",
     Task: "morbi",
-    Due_Date: "23-Aug-2020",
   },
   {
     id: "5",
     Task: "proin",
-    Due_Date: "05-Jan-2021",
   },
 ];
 
-type ColumnsType = {
+export type ColumnsType = {
   [x: string]: {
     title: string;
-    items: { id: string; Task: string; Due_Date: string }[];
+    items: Item[];
   };
 };
 
@@ -72,51 +69,32 @@ const App: React.FC = () => {
     columns: ColumnsType,
     setColumns: React.Dispatch<SetStateAction<ColumnsType>>
   ) => {
-    const { source, destination } = result;
-    console.log("source", source);
-    if (source?.droppableId === "1" && destination?.droppableId === "3") {
-      setIndexState(null);
-      setError(false);
+    const destination = result.destination;
+    const source = result.source;
+
+    // nothing to do
+    if (!destination || result.reason === "CANCEL") {
+      setDraggingTaskId(null);
       return;
     }
-    if (source?.droppableId !== destination?.droppableId) {
-      const sourceColumn = columns[source.droppableId];
-      const destColumn = columns[destination.droppableId];
-      const sourceItems = [...sourceColumn.items];
-      const destItems = [...destColumn.items];
-      const [removed] = sourceItems.splice(source.index, 1);
-      destItems.splice(destination.index, 0, removed);
-      setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...sourceColumn,
-          items: sourceItems,
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          items: destItems,
-        },
-      });
-    } else {
-      const column = columns[source.droppableId];
-      const copiedItems = [...column.items];
-      const [removed] = copiedItems.splice(source.index, 1);
-      copiedItems.splice(destination.index, 0, removed);
-      setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...column,
-          items: copiedItems,
-        },
-      });
-    }
+
+    const processed = mutliDragAwareReorder({
+      columns,
+      selectedTaskIds,
+      source,
+      destination,
+    });
+
+    console.log("onDragEnd", processed);
+
+    setColumns(processed);
+    setDraggingTaskId(null);
   };
 
   const onBeforeCapture = (start: BeforeCapture) => {
     const draggableId = start.draggableId;
     const selected = selectedTaskIds.find((taskId) => taskId === draggableId);
 
-    // if dragging an item that is not selected - unselect all items
     if (!selected) {
       setSelectedTaskIds([]);
     }
@@ -147,6 +125,7 @@ const App: React.FC = () => {
         {Object.entries(columns).map(([columId, column]) => {
           return (
             <ItemList
+              key={columId}
               columId={columId}
               column={column}
               error={error}
