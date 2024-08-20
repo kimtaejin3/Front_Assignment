@@ -159,6 +159,19 @@ const App: React.FC = () => {
         const destItem = destColumn?.items[result.destination?.index];
 
         if (selectedTasks.length > 0) {
+          console.log("DestItem: ", destItem);
+
+          if (
+            sourceColumn === destColumn &&
+            selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
+            selectedTasks[selectedTasks.length - 1]?.isEven &&
+            destItem?.isEven
+            // sourceDraggedItem.order > destItem.order
+          ) {
+            setIndexState(sourceDraggedItem.id);
+            return;
+          }
+
           if (
             sourceColumn !== destColumn &&
             selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
