@@ -148,6 +148,13 @@ const App: React.FC = () => {
   };
 
   const onDragUpdate = (result: DragUpdate) => {
+    console.log("what:", result.destination?.droppableId);
+    setIndexState(null);
+    if (result.destination?.droppableId !== "3") {
+      console.log("aosidfoaejfpaowief");
+      setError(false);
+      return;
+    }
     if (indexState) {
       return;
     }
