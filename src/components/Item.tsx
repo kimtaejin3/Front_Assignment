@@ -150,7 +150,7 @@ const getItemStyle = (
   padding: GRID * 2,
   margin: `0 0 ${GRID}px 0`,
   background: isSelected ? "blue" : "#fffcfc",
-  border: isDragging ? "2px solid #000" : "",
+  border: isDragging ? "2px solid #49494a" : "",
   color: a ? "red" : "black",
   // opacity: isGhosting ? "0.5" : "1",
   display: isGhosting ? "none" : "block",
