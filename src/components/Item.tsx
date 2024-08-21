@@ -114,7 +114,8 @@ export default function Item({
             provided.draggableProps.style,
             indexState === item.id,
             isSelected,
-            isGhosting
+            isGhosting,
+            item.isEven
           )}
           onClick={onClick}
         >
@@ -160,16 +161,17 @@ const GRID = 8;
 const getItemStyle = (
   isDragging: boolean,
   draggableStyle: DraggingStyle | NotDraggingStyle,
-  a: boolean,
+  error: boolean,
   isSelected: boolean,
-  isGhosting: boolean
+  isGhosting: boolean,
+  isEven: boolean
 ): CSSProperties => ({
   userSelect: "none",
   padding: GRID * 1.8,
   margin: `0 0 ${GRID}px 0`,
-  background: isSelected ? "#bf7236" : "#fffcfc",
+  background: isSelected ? (isEven ? "#44516d" : "#bf7236") : "#fffcfc",
   color: isSelected ? "#fff" : "#000",
-  border: isDragging ? (a ? "3px solid #e03d3d" : "3px solid #49494a") : "",
+  border: isDragging ? (error ? "3px solid #e03d3d" : "3px solid #49494a") : "",
   opacity: isGhosting ? "0.5" : "1",
   position: "relative",
   borderRadius: 10,

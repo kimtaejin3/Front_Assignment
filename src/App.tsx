@@ -148,6 +148,9 @@ const App: React.FC = () => {
   };
 
   const onDragUpdate = (result: DragUpdate) => {
+    if (indexState) {
+      return;
+    }
     const sourceColumn = columns[result.source?.droppableId];
     //dragged
     const sourceDraggedItem = sourceColumn?.items[result.source?.index];
@@ -262,8 +265,21 @@ const App: React.FC = () => {
       selectedTasks[selectedTasks.length - 1].isEven
     ) {
       setIndexState(sourceDraggedItem.id);
+      return;
     }
-    // if(column.items[start.])
+
+    let flag = false;
+
+    for (let i = 0; i < selectedTasks.length - 1; i++) {
+      if (selectedTasks[i].isEven && selectedTasks[i + 1].isEven) {
+        flag = true;
+      }
+    }
+
+    if (flag) {
+      setIndexState(sourceDraggedItem.id);
+      return;
+    }
   };
 
   return (
