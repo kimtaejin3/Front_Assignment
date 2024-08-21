@@ -62,10 +62,10 @@ const getListStyle = (
   isDraggingOver: boolean,
   error: boolean
 ): CSSProperties => ({
-  background: isDraggingOver ? (error ? "red" : "lightblue") : "lightgrey",
+  background: isDraggingOver ? (error ? "red" : "#ffeadb") : "#ebecf0",
 
   padding: GRID,
   width: 250,
   minHeight: 500,
-  borderRadius: 20,
+  borderRadius: 10,
 });

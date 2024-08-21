@@ -149,12 +149,13 @@ const getItemStyle = (
   userSelect: "none",
   padding: GRID * 2,
   margin: `0 0 ${GRID}px 0`,
-  background: isDragging ? "lightgreen" : isSelected ? "blue" : "grey",
+  background: isSelected ? "blue" : "#fffcfc",
+  border: isDragging ? "2px solid #000" : "",
   color: a ? "red" : "black",
   // opacity: isGhosting ? "0.5" : "1",
   display: isGhosting ? "none" : "block",
   position: "relative",
-  borderRadius: 20,
+  borderRadius: 10,
   ...draggableStyle,
 });
 
