@@ -1,12 +1,8 @@
-import { CSSProperties, Dispatch, SetStateAction } from "react";
-import {
-  Draggable,
-  DraggingStyle,
-  Droppable,
-  NotDraggingStyle,
-} from "react-beautiful-dnd";
+import { CSSProperties, SetStateAction } from "react";
+import { Droppable } from "react-beautiful-dnd";
 import Item from "./Item";
 import type { Item as ItemType } from "./Item";
+// import Tom from "../assets/static/tom2.webp";
 
 interface Props {
   columId: string;

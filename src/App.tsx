@@ -17,35 +17,36 @@ import "./App.css";
 export const data = [
   {
     id: "1",
-    Task: "Item2",
+    Task: "주야랑 스키장 가기",
+
     isEven: true,
     column: 1,
     order: 1,
   },
   {
     id: "2",
-    Task: "Item1",
+    Task: "주야랑 밤에 꼬옥 잡고 산책하기",
     isEven: false,
     column: 2,
     order: 2,
   },
   {
     id: "3",
-    Task: "Item4",
+    Task: "주야한테 생일 축하해주기",
     isEven: true,
     column: 3,
     order: 3,
   },
   {
     id: "4",
-    Task: "Item7",
+    Task: "주야보면 안아주기",
     isEven: false,
     column: 4,
     order: 4,
   },
   {
     id: "5",
-    Task: "Item9",
+    Task: "주야 기분좋게 간지럽히는 법 연구해보기",
     isEven: false,
     column: 5,
     order: 5,
