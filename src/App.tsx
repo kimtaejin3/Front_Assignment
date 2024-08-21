@@ -156,8 +156,6 @@ const App: React.FC = () => {
     const destItem = destColumn?.items[result.destination?.index];
 
     if (selectedTasks.length > 0) {
-      console.log("DestItem: ", destItem);
-
       if (
         sourceColumn === destColumn &&
         selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
@@ -185,8 +183,6 @@ const App: React.FC = () => {
         selectedTasks[selectedTasks.length - 1]?.isEven &&
         destItem?.isEven
       ) {
-        console.log("3");
-
         setIndexState(sourceDraggedItem.id);
         return;
       }
@@ -249,6 +245,27 @@ const App: React.FC = () => {
     }
   };
 
+  const onDragStart = (start: DragStart) => {
+    if (selectedTasks.length < 2) return;
+
+    const column = columns[start.source?.droppableId];
+    //dragged
+    const sourceDraggedItem = column.items[start.source.index];
+    console.log(
+      "check!!!:",
+      column.items[start.source.index],
+      column.items[start.source.index + 1]
+    );
+
+    if (
+      column.items[start.source.index + 1].isEven &&
+      selectedTasks[selectedTasks.length - 1].isEven
+    ) {
+      setIndexState(sourceDraggedItem.id);
+    }
+    // if(column.items[start.])
+  };
+
   return (
     <div>
       <h1 className="title">Tom & Jerry's drag playground</h1>
@@ -256,6 +273,7 @@ const App: React.FC = () => {
         onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
         onBeforeCapture={(start) => onBeforeCapture(start)}
         onDragUpdate={(result) => onDragUpdate(result)}
+        onDragStart={(start) => onDragStart(start)}
       >
         <div style={getListContainerStyle}>
           {Object.entries(columns).map(([columId, column]) => {
