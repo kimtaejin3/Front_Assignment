@@ -4,6 +4,8 @@ import {
   DraggingStyle,
   NotDraggingStyle,
 } from "react-beautiful-dnd";
+import JerryImg from "../assets/static/image.png";
+import TomImg from "../assets/static/image2.png";
 
 export type Item = {
   id: string;
@@ -129,7 +131,26 @@ export default function Item({
               {selectedTasks.length}
             </span>
           )}
-          {item.Task}
+          <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+            <div
+              style={{
+                width: 25,
+                height: 25,
+                backgroundColor: "red",
+                borderRadius: "50%",
+                flexShrink: 0,
+                overflow: "hidden",
+              }}
+            >
+              <img style={{ width: "100%", height: "100%" }} src={TomImg} />
+            </div>
+            <div>
+              {item.Task}
+              <div style={{ marginTop: 10 }}>
+                <span style={getNamePlate}>Tom</span>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </Draggable>
@@ -147,15 +168,17 @@ const getItemStyle = (
   isGhosting: boolean
 ): CSSProperties => ({
   userSelect: "none",
-  padding: GRID * 2,
+  padding: GRID * 1.8,
   margin: `0 0 ${GRID}px 0`,
-  background: isSelected ? "blue" : "#fffcfc",
+  background: isSelected ? "#bf7236" : "#fffcfc",
+  color: isSelected ? "#fff" : "#000",
   border: isDragging ? "3px solid #49494a" : "",
-  color: a ? "red" : "black",
-  // opacity: isGhosting ? "0.5" : "1",
+  opacity: a ? "0.5" : "1",
   display: isGhosting ? "none" : "block",
   position: "relative",
   borderRadius: 10,
+  height: "auto",
+  fontSize: 15,
   ...draggableStyle,
 });
 
@@ -172,3 +195,12 @@ const getTagStyle = (isDragging: boolean): CSSProperties => ({
   borderRadius: "50%",
   fontSize: "13px",
 });
+
+const getNamePlate: CSSProperties = {
+  backgroundColor: "#fffae6",
+  padding: "5px 8px",
+  fontWeight: 400,
+  borderRadius: 10,
+  fontSize: 13,
+  color: "#000",
+};
