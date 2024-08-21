@@ -154,6 +154,7 @@ const getItemStyle = (
   // opacity: isGhosting ? "0.5" : "1",
   display: isGhosting ? "none" : "block",
   position: "relative",
+  borderRadius: 20,
   ...draggableStyle,
 });
 

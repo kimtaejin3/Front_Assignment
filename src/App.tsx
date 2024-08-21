@@ -3,6 +3,7 @@ import {
   BeforeCapture,
   DragDropContext,
   DragStart,
+  DragUpdate,
   DropResult,
 } from "react-beautiful-dnd";
 import ItemList from "./components/ItemList";
@@ -11,6 +12,7 @@ import {
   reconcilateColumnItems,
 } from "./utils/dragUtil";
 import type { Item } from "./components/Item";
+import "./App.css";
 
 export const data = [
   {
@@ -141,131 +143,137 @@ const App: React.FC = () => {
     setDraggingTaskId(draggableId);
   };
 
-  const onDragStart = (start: DragStart) => {
-    selectedTasks[selectedTasks.length - 1];
+  const onDragUpdate = (result: DragUpdate) => {
+    const sourceColumn = columns[result.source?.droppableId];
+    //dragged
+    const sourceDraggedItem = sourceColumn?.items[result.source?.index];
+
+    const destColumn = columns[result.destination?.droppableId];
+    const destItem = destColumn?.items[result.destination?.index];
+
+    if (selectedTasks.length > 0) {
+      console.log("DestItem: ", destItem);
+
+      if (
+        sourceColumn === destColumn &&
+        selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
+        selectedTasks[selectedTasks.length - 1]?.isEven &&
+        destItem?.isEven
+        // sourceDraggedItem.order > destItem.order
+      ) {
+        setIndexState(sourceDraggedItem.id);
+        return;
+      }
+
+      if (
+        sourceColumn !== destColumn &&
+        selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
+        selectedTasks[selectedTasks.length - 1]?.isEven &&
+        destItem?.isEven
+      ) {
+        console.log("3");
+
+        setIndexState(sourceDraggedItem.id);
+        return;
+      }
+
+      if (
+        result.destination?.droppableId === "3" &&
+        result.source?.droppableId === "1"
+      ) {
+        setIndexState(sourceDraggedItem.id);
+        setError(true);
+      } else {
+        setIndexState(null);
+        setError(false);
+      }
+
+      return;
+    }
+
+    if (
+      sourceColumn === destColumn &&
+      sourceDraggedItem?.isEven &&
+      destItem?.dibsOrder !== null &&
+      sourceDraggedItem?.order < destItem?.dibsOrder
+    ) {
+      setIndexState(sourceDraggedItem.id);
+      return;
+    }
+
+    if (
+      sourceColumn === destColumn &&
+      sourceDraggedItem?.id !== destItem?.id &&
+      sourceDraggedItem?.isEven &&
+      destItem?.isEven &&
+      sourceDraggedItem.order > destItem.order
+    ) {
+      setIndexState(sourceDraggedItem.id);
+      return;
+    }
+
+    if (
+      sourceColumn !== destColumn &&
+      sourceDraggedItem?.id !== destItem?.id &&
+      sourceDraggedItem?.isEven &&
+      destItem?.isEven
+    ) {
+      setIndexState(sourceDraggedItem.id);
+      return;
+    }
+
+    if (
+      result.destination?.droppableId === "3" &&
+      result.source?.droppableId === "1"
+    ) {
+      setIndexState(sourceDraggedItem.id);
+      setError(true);
+    } else {
+      setIndexState(null);
+      setError(false);
+    }
   };
 
   return (
-    <DragDropContext
-      onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-      onBeforeCapture={(start) => onBeforeCapture(start)}
-      onDragStart={(start) => onDragStart(start)}
-      onDragUpdate={(result) => {
-        const sourceColumn = columns[result.source?.droppableId];
-        //dragged
-        const sourceDraggedItem = sourceColumn?.items[result.source?.index];
-
-        const destColumn = columns[result.destination?.droppableId];
-        const destItem = destColumn?.items[result.destination?.index];
-
-        if (selectedTasks.length > 0) {
-          console.log("DestItem: ", destItem);
-
-          if (
-            sourceColumn === destColumn &&
-            selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
-            selectedTasks[selectedTasks.length - 1]?.isEven &&
-            destItem?.isEven
-            // sourceDraggedItem.order > destItem.order
-          ) {
-            setIndexState(sourceDraggedItem.id);
-            return;
-          }
-
-          if (
-            sourceColumn !== destColumn &&
-            selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
-            selectedTasks[selectedTasks.length - 1]?.isEven &&
-            destItem?.isEven
-          ) {
-            console.log("3");
-
-            setIndexState(sourceDraggedItem.id);
-            return;
-          }
-
-          if (
-            result.destination?.droppableId === "3" &&
-            result.source?.droppableId === "1"
-          ) {
-            setIndexState(sourceDraggedItem.id);
-            setError(true);
-          } else {
-            setIndexState(null);
-            setError(false);
-          }
-
-          return;
-        }
-
-        if (
-          sourceColumn === destColumn &&
-          sourceDraggedItem?.isEven &&
-          destItem?.dibsOrder !== null &&
-          sourceDraggedItem?.order < destItem?.dibsOrder
-        ) {
-          setIndexState(sourceDraggedItem.id);
-          return;
-        }
-
-        if (
-          sourceColumn === destColumn &&
-          sourceDraggedItem?.id !== destItem?.id &&
-          sourceDraggedItem?.isEven &&
-          destItem?.isEven &&
-          sourceDraggedItem.order > destItem.order
-        ) {
-          setIndexState(sourceDraggedItem.id);
-          return;
-        }
-
-        if (
-          sourceColumn !== destColumn &&
-          sourceDraggedItem?.id !== destItem?.id &&
-          sourceDraggedItem?.isEven &&
-          destItem?.isEven
-        ) {
-          setIndexState(sourceDraggedItem.id);
-          return;
-        }
-
-        if (
-          result.destination?.droppableId === "3" &&
-          result.source?.droppableId === "1"
-        ) {
-          setIndexState(sourceDraggedItem.id);
-          setError(true);
-        } else {
-          setIndexState(null);
-          setError(false);
-        }
-      }}
-    >
-      <div style={getContainerStyle}>
-        {Object.entries(columns).map(([columId, column]) => {
-          return (
-            <ItemList
-              key={columId}
-              columId={columId}
-              column={column}
-              error={error}
-              indexState={indexState}
-              selectedTasks={selectedTasks}
-              onSetSelectedTasks={setSelectedTasks}
-              draggingTaskId={draggingTaskId}
-            />
-          );
-        })}
-      </div>
-    </DragDropContext>
+    <div style={getContainerStyle}>
+      <h1 className="title">Tom & Jerry Planner</h1>
+      <DragDropContext
+        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+        onBeforeCapture={(start) => onBeforeCapture(start)}
+        onDragUpdate={(result) => onDragUpdate(result)}
+      >
+        <div style={getListContainerStyle}>
+          {Object.entries(columns).map(([columId, column]) => {
+            return (
+              <ItemList
+                key={columId}
+                columId={columId}
+                column={column}
+                error={error}
+                indexState={indexState}
+                selectedTasks={selectedTasks}
+                onSetSelectedTasks={setSelectedTasks}
+                draggingTaskId={draggingTaskId}
+              />
+            );
+          })}
+        </div>
+      </DragDropContext>
+    </div>
   );
 };
 
 const getContainerStyle: CSSProperties = {
-  height: "100vh",
   display: "flex",
+  flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  gap: "20px",
+  height: "100vh",
+};
+
+const getListContainerStyle: CSSProperties = {
+  display: "flex",
   gap: "20px",
 };
 

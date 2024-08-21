@@ -67,4 +67,5 @@ const getListStyle = (
   padding: GRID,
   width: 250,
   minHeight: 500,
+  borderRadius: 20,
 });
