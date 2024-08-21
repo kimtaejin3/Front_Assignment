@@ -170,7 +170,7 @@ const getItemStyle = (
   background: isSelected ? "#bf7236" : "#fffcfc",
   color: isSelected ? "#fff" : "#000",
   border: isDragging ? (a ? "3px solid #e03d3d" : "3px solid #49494a") : "",
-  display: isGhosting ? "none" : "block",
+  opacity: isGhosting ? "0.5" : "1",
   position: "relative",
   borderRadius: 10,
   height: "auto",
