@@ -35,7 +35,15 @@ export default function ItemList({
           style={getListStyle(snapshot.isDraggingOver, error)}
         >
           {columId === "3" && (
-            <img style={{ position: "relative", zIndex: 0 }} src={Tom} />
+            <img
+              style={{
+                position: "absolute",
+                zIndex: -1,
+                top: error ? -120 : 0,
+                transition: "all .5s",
+              }}
+              src={Tom}
+            />
           )}
           {column.items.map((item, index) => (
             <Item
@@ -61,12 +69,11 @@ const getListStyle = (
   isDraggingOver: boolean,
   error: boolean
 ): CSSProperties => ({
-  background: isDraggingOver ? (error ? "red" : "#ffeadb") : "#ebecf0",
+  background: isDraggingOver ? "#ffeadb" : "#ebecf0",
 
   padding: GRID,
   width: 250,
   minHeight: 500,
   borderRadius: 10,
   position: "relative",
-  zIndex: 1,
 });
