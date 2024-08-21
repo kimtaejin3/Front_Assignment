@@ -162,8 +162,18 @@ const App: React.FC = () => {
         sourceColumn === destColumn &&
         selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
         selectedTasks[selectedTasks.length - 1]?.isEven &&
-        destItem?.isEven
-        // sourceDraggedItem.order > destItem.order
+        destItem?.isEven &&
+        selectedTasks[selectedTasks.length - 1].order > destItem.order
+      ) {
+        setIndexState(sourceDraggedItem.id);
+        return;
+      }
+
+      if (
+        sourceColumn === destColumn &&
+        selectedTasks[selectedTasks.length - 1]?.isEven &&
+        destItem?.dibsOrder !== null &&
+        selectedTasks[selectedTasks.length - 1]?.order < destItem?.dibsOrder
       ) {
         setIndexState(sourceDraggedItem.id);
         return;
