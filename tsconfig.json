@@ -10,7 +10,8 @@
     "jsx": "react-jsx",
     // "noEmit": true,
     // "allowImportingTsExtensions": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "typeRoots": ["node_modules/@types", "src/types"]
   },
   "include": ["src"]
 }

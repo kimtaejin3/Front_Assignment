@@ -2,7 +2,7 @@ import { CSSProperties, SetStateAction } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Item from "./Item";
 import type { Item as ItemType } from "./Item";
-// import Tom from "../assets/static/tom2.webp";
+import Tom from "../assets/static/tom2.webp";
 
 interface Props {
   columId: string;
@@ -34,6 +34,9 @@ export default function ItemList({
           {...provided.droppableProps}
           style={getListStyle(snapshot.isDraggingOver, error)}
         >
+          {columId === "3" && (
+            <img style={{ position: "relative", zIndex: 0 }} src={Tom} />
+          )}
           {column.items.map((item, index) => (
             <Item
               key={item.id}
@@ -64,4 +67,6 @@ const getListStyle = (
   width: 250,
   minHeight: 500,
   borderRadius: 10,
+  position: "relative",
+  zIndex: 1,
 });
