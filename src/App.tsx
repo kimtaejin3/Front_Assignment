@@ -18,7 +18,6 @@ export const data = [
   {
     id: "1",
     Task: "주야랑 스키장 가기",
-
     isEven: true,
     column: 1,
     order: 1,

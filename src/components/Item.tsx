@@ -37,14 +37,12 @@ export default function Item({
   const toggleSelectionInGroup = (task: Item) => {
     const index = selectedTasks.map((task) => task.id).indexOf(task.id);
 
-    // if not selected - add it to the selected items
     if (index === -1) {
       onSetSelectedTasks([...selectedTasks, task]);
 
       return;
     }
 
-    // it was previously selected and now needs to be removed from the group
     const shallow = [...selectedTasks];
     shallow.splice(index, 1);
 
@@ -62,20 +60,14 @@ export default function Item({
     const wasSelected = selectedTasks.map((task) => task.id).includes(task.id);
 
     const newTaskIds = (() => {
-      // Task was not previously selected
-      // now will be the only selected item
       if (!wasSelected) {
         return [task];
       }
 
-      // Task was part of a selected group
-      // will now become the only selected item
       if (selectedTasks.length > 1) {
         return [task];
       }
 
-      // task was previously selected but not in a group
-      // we will now clear the selection
       return [];
     })();
 
@@ -142,12 +134,17 @@ export default function Item({
                 overflow: "hidden",
               }}
             >
-              <img style={{ width: "100%", height: "100%" }} src={TomImg} />
+              <img
+                style={{ width: "100%", height: "100%" }}
+                src={item.isEven ? TomImg : JerryImg}
+              />
             </div>
             <div>
               {item.Task}
               <div style={{ marginTop: 10 }}>
-                <span style={getNamePlate}>Tom</span>
+                <span style={getNamePlate(item.isEven)}>
+                  {item.isEven ? "Tom" : "Jerry"}
+                </span>
               </div>
             </div>
           </div>
@@ -172,8 +169,7 @@ const getItemStyle = (
   margin: `0 0 ${GRID}px 0`,
   background: isSelected ? "#bf7236" : "#fffcfc",
   color: isSelected ? "#fff" : "#000",
-  border: isDragging ? "3px solid #49494a" : "",
-  opacity: a ? "0.5" : "1",
+  border: isDragging ? (a ? "3px solid #e03d3d" : "3px solid #49494a") : "",
   display: isGhosting ? "none" : "block",
   position: "relative",
   borderRadius: 10,
@@ -196,11 +192,11 @@ const getTagStyle = (isDragging: boolean): CSSProperties => ({
   fontSize: "13px",
 });
 
-const getNamePlate: CSSProperties = {
-  backgroundColor: "#fffae6",
+const getNamePlate = (isEven: boolean): CSSProperties => ({
+  backgroundColor: isEven ? "#ddebff" : "#fffae6",
   padding: "5px 8px",
   fontWeight: 400,
   borderRadius: 10,
   fontSize: 13,
   color: "#000",
-};
+});
