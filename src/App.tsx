@@ -121,6 +121,7 @@ const App: React.FC = () => {
       setIndexState(null);
       setSelectedTasks([]);
       setDraggingTaskId(null);
+      console.log("index State check");
       return;
     }
 
@@ -150,11 +151,12 @@ const App: React.FC = () => {
   const onDragUpdate = (result: DragUpdate) => {
     console.log("what:", result.destination?.droppableId);
     setIndexState(null);
-    if (result.destination?.droppableId !== "3") {
-      console.log("aosidfoaejfpaowief");
-      setError(false);
-      return;
-    }
+    setError(false);
+    // if (result.destination?.droppableId !== "3") {
+    //   console.log("aosidfoaejfpaowief");
+    //   setError(false);
+    //   return;
+    // }
     if (indexState) {
       return;
     }
@@ -208,6 +210,8 @@ const App: React.FC = () => {
         setError(false);
       }
 
+      console.log("adsof");
+
       return;
     }
 
@@ -245,7 +249,7 @@ const App: React.FC = () => {
     if (
       result.destination?.droppableId === "3" &&
       result.source?.droppableId === "1" &&
-      !sourceDraggedItem.isEven
+      !sourceDraggedItem?.isEven
     ) {
       setIndexState(sourceDraggedItem.id);
       setError(true);
@@ -261,16 +265,15 @@ const App: React.FC = () => {
     const column = columns[start.source?.droppableId];
     //dragged
     const sourceDraggedItem = column.items[start.source.index];
-    console.log(
-      "check!!!:",
-      column.items[start.source.index],
-      column.items[start.source.index + 1]
+    const maxOrder = Math.max(...selectedTasks.map((value) => value.order));
+    const [targetItem] = column.items.filter(
+      (item) => item.order === maxOrder + 1
     );
 
-    if (
-      column.items[start.source.index + 1].isEven &&
-      selectedTasks[selectedTasks.length - 1].isEven
-    ) {
+    console.log("maxOrder:", maxOrder);
+    console.log("targetItem:", targetItem);
+
+    if (targetItem?.isEven && selectedTasks[selectedTasks.length - 1]?.isEven) {
       setIndexState(sourceDraggedItem.id);
       return;
     }
@@ -278,7 +281,7 @@ const App: React.FC = () => {
     let flag = false;
 
     for (let i = 0; i < selectedTasks.length - 1; i++) {
-      if (selectedTasks[i].isEven && selectedTasks[i + 1].isEven) {
+      if (selectedTasks[i]?.isEven && selectedTasks[i + 1]?.isEven) {
         flag = true;
       }
     }
