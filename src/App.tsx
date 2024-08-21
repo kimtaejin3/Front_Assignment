@@ -105,7 +105,11 @@ const App: React.FC = () => {
     const destination = result.destination;
     const source = result.source;
 
-    if (source?.droppableId === "1" && destination?.droppableId === "3") {
+    if (
+      source?.droppableId === "1" &&
+      destination?.droppableId === "3" &&
+      error
+    ) {
       setError(false);
       setIndexState(null);
       setSelectedTasks([]);
@@ -224,7 +228,8 @@ const App: React.FC = () => {
 
     if (
       result.destination?.droppableId === "3" &&
-      result.source?.droppableId === "1"
+      result.source?.droppableId === "1" &&
+      !sourceDraggedItem.isEven
     ) {
       setIndexState(sourceDraggedItem.id);
       setError(true);
