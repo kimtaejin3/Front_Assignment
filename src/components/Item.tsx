@@ -128,7 +128,7 @@ export default function Item({
               style={{
                 width: 25,
                 height: 25,
-                backgroundColor: "red",
+                backgroundColor: "#eee",
                 borderRadius: "50%",
                 flexShrink: 0,
                 overflow: "hidden",

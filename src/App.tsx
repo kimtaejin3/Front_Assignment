@@ -240,7 +240,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={getContainerStyle}>
+    <div>
       <h1 className="title">Tom & Jerry's drag playground</h1>
       <DragDropContext
         onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
@@ -268,18 +268,11 @@ const App: React.FC = () => {
   );
 };
 
-const getContainerStyle: CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: "20px",
-  height: "100vh",
-};
-
 const getListContainerStyle: CSSProperties = {
   display: "flex",
   gap: "20px",
+  width: "fit-content",
+  margin: "100px auto 0",
 };
 
 export default App;
