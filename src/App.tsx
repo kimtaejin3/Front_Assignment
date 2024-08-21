@@ -241,7 +241,7 @@ const App: React.FC = () => {
 
   return (
     <div style={getContainerStyle}>
-      <h1 className="title">Tom & Jerry Planner</h1>
+      <h1 className="title">Tom & Jerry's drag playground</h1>
       <DragDropContext
         onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
         onBeforeCapture={(start) => onBeforeCapture(start)}
