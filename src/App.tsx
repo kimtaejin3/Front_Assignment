@@ -94,6 +94,8 @@ const App: React.FC = () => {
   const [indexState, setIndexState] = useState<null | string>(null);
   const [selectedTasks, setSelectedTasks] = useState<Item[]>([]);
   const [draggingTaskId, setDraggingTaskId] = useState(null);
+  //TODO: flag 변수명 변경
+  const [flag, setFlag] = useState(false);
 
   const onDragEnd = (
     result: DropResult,
@@ -146,18 +148,15 @@ const App: React.FC = () => {
   };
 
   const onDragUpdate = (result: DragUpdate) => {
+    console.log("drag update");
     setIndexState(null);
-    setError(false);
-    if (indexState) {
-      return;
-    }
+
     const sourceColumn = columns[result.source?.droppableId];
     //dragged
     const sourceDraggedItem = sourceColumn?.items[result.source?.index];
 
     const destColumn = columns[result.destination?.droppableId];
     const destItem = destColumn?.items[result.destination?.index];
-
     if (selectedTasks.length > 0) {
       const orderedSelectedTasks = [...selectedTasks];
 
@@ -172,6 +171,28 @@ const App: React.FC = () => {
         { ...sourceDraggedItem },
         ...filteredOrderedSelectedTasks,
       ];
+
+      const maxOrder = Math.max(
+        ...modifiedOrderedSelectedTasks.map((value) => value.order)
+      );
+
+      const [targetItem] = sourceColumn.items.filter(
+        (item) => item.order === maxOrder + 1
+      );
+
+      if (
+        targetItem?.isEven &&
+        modifiedOrderedSelectedTasks[modifiedOrderedSelectedTasks.length - 1]
+          ?.isEven &&
+        !flag
+      ) {
+        if (destItem.id === targetItem.id) {
+          setFlag(true);
+          return;
+        }
+        setIndexState(sourceDraggedItem.id);
+        return;
+      }
 
       if (
         sourceColumn === destColumn &&
