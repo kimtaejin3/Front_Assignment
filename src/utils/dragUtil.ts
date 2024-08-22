@@ -132,6 +132,8 @@ const reorderMultiDrag = ({
       return -1;
     });
 
+  console.log("ordered selected tasks:", orderedSelectedTasks);
+
   const withRemovedTasks = Object.keys(columns).reduce((previous, columnId) => {
     const column = columns[columnId];
 
@@ -210,7 +212,6 @@ export const mutliDragAwareReorder = (args: Args) => {
   if (args.selectedTasks.length > 1) {
     const newColumn = reorderMultiDrag(args);
     const reconcilatedColumn = reconcilateColumnItems(newColumn);
-    console.log("result:", reconcilatedColumn);
 
     return reconcilatedColumn;
   }
@@ -218,6 +219,5 @@ export const mutliDragAwareReorder = (args: Args) => {
   const newColumn = reorderSingleDrag(args);
   const reconcilatedColumn = reconcilateColumnItems(newColumn);
 
-  console.log("result:", reconcilatedColumn);
   return reconcilatedColumn;
 };
