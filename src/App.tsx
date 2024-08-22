@@ -95,8 +95,6 @@ const App: React.FC = () => {
   const [selectedTasks, setSelectedTasks] = useState<Item[]>([]);
   const [draggingTaskId, setDraggingTaskId] = useState(null);
 
-  console.log("columns:", columns);
-
   const onDragEnd = (
     result: DropResult,
     columns: ColumnsType,
@@ -121,7 +119,6 @@ const App: React.FC = () => {
       setIndexState(null);
       setSelectedTasks([]);
       setDraggingTaskId(null);
-      console.log("index State check");
       return;
     }
 
@@ -149,14 +146,8 @@ const App: React.FC = () => {
   };
 
   const onDragUpdate = (result: DragUpdate) => {
-    console.log("what:", result.destination?.droppableId);
     setIndexState(null);
     setError(false);
-    // if (result.destination?.droppableId !== "3") {
-    //   console.log("aosidfoaejfpaowief");
-    //   setError(false);
-    //   return;
-    // }
     if (indexState) {
       return;
     }
@@ -168,12 +159,29 @@ const App: React.FC = () => {
     const destItem = destColumn?.items[result.destination?.index];
 
     if (selectedTasks.length > 0) {
+      const orderedSelectedTasks = [...selectedTasks];
+
+      orderedSelectedTasks.sort((a, b) => {
+        return a.order - b.order;
+      });
+
+      const filteredOrderedSelectedTasks = orderedSelectedTasks.filter(
+        (task) => task.id !== sourceDraggedItem.id
+      );
+      const modifiedOrderedSelectedTasks = [
+        { ...sourceDraggedItem },
+        ...filteredOrderedSelectedTasks,
+      ];
+
       if (
         sourceColumn === destColumn &&
-        selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
-        selectedTasks[selectedTasks.length - 1]?.isEven &&
+        modifiedOrderedSelectedTasks[modifiedOrderedSelectedTasks.length - 1]
+          ?.id !== destItem?.id &&
+        modifiedOrderedSelectedTasks[modifiedOrderedSelectedTasks.length - 1]
+          ?.isEven &&
         destItem?.isEven &&
-        selectedTasks[selectedTasks.length - 1].order > destItem.order
+        modifiedOrderedSelectedTasks[modifiedOrderedSelectedTasks.length - 1]
+          .order > destItem.order
       ) {
         setIndexState(sourceDraggedItem.id);
         return;
@@ -181,9 +189,11 @@ const App: React.FC = () => {
 
       if (
         sourceColumn === destColumn &&
-        selectedTasks[selectedTasks.length - 1]?.isEven &&
+        modifiedOrderedSelectedTasks[modifiedOrderedSelectedTasks.length - 1]
+          ?.isEven &&
         destItem?.dibsOrder !== null &&
-        selectedTasks[selectedTasks.length - 1]?.order < destItem?.dibsOrder
+        modifiedOrderedSelectedTasks[modifiedOrderedSelectedTasks.length - 1]
+          ?.order < destItem?.dibsOrder
       ) {
         setIndexState(sourceDraggedItem.id);
         return;
@@ -191,8 +201,10 @@ const App: React.FC = () => {
 
       if (
         sourceColumn !== destColumn &&
-        selectedTasks[selectedTasks.length - 1]?.id !== destItem?.id &&
-        selectedTasks[selectedTasks.length - 1]?.isEven &&
+        modifiedOrderedSelectedTasks[modifiedOrderedSelectedTasks.length - 1]
+          ?.id !== destItem?.id &&
+        modifiedOrderedSelectedTasks[modifiedOrderedSelectedTasks.length - 1]
+          ?.isEven &&
         destItem?.isEven
       ) {
         setIndexState(sourceDraggedItem.id);
@@ -209,8 +221,6 @@ const App: React.FC = () => {
         setIndexState(null);
         setError(false);
       }
-
-      console.log("adsof");
 
       return;
     }
@@ -265,15 +275,33 @@ const App: React.FC = () => {
     const column = columns[start.source?.droppableId];
     //dragged
     const sourceDraggedItem = column.items[start.source.index];
-    const maxOrder = Math.max(...selectedTasks.map((value) => value.order));
+
+    const orderedSelectedTasks = [...selectedTasks];
+
+    orderedSelectedTasks.sort((a, b) => {
+      return a.order - b.order;
+    });
+
+    const filteredOrderedSelectedTasks = orderedSelectedTasks.filter(
+      (task) => task.id !== sourceDraggedItem.id
+    );
+    const modifiedOrderedSelectedTasks = [
+      { ...sourceDraggedItem },
+      ...filteredOrderedSelectedTasks,
+    ];
+
+    const maxOrder = Math.max(
+      ...modifiedOrderedSelectedTasks.map((value) => value.order)
+    );
     const [targetItem] = column.items.filter(
       (item) => item.order === maxOrder + 1
     );
 
-    console.log("maxOrder:", maxOrder);
-    console.log("targetItem:", targetItem);
-
-    if (targetItem?.isEven && selectedTasks[selectedTasks.length - 1]?.isEven) {
+    if (
+      targetItem?.isEven &&
+      modifiedOrderedSelectedTasks[modifiedOrderedSelectedTasks.length - 1]
+        ?.isEven
+    ) {
       setIndexState(sourceDraggedItem.id);
       return;
     }

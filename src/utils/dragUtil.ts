@@ -109,30 +109,17 @@ const reorderMultiDrag = ({
 
   const orderedSelectedTasks = [...selectedTasks];
 
-  orderedSelectedTasks
-    .map((task) => task.id)
-    .sort((a, b) => {
-      if (a === sourceDraggedItem.id) {
-        return -1;
-      }
+  orderedSelectedTasks.sort((a, b) => {
+    return a.order - b.order;
+  });
 
-      if (b === sourceDraggedItem.id) {
-        return 1;
-      }
-
-      const columnForA = getHomeColumn(columns, a);
-      const indexOfA = columnForA.items.map((item) => item.id).indexOf(a);
-      const columnForB = getHomeColumn(columns, b);
-      const indexOfB = columnForB.items.map((item) => item.id).indexOf(b);
-
-      if (indexOfA !== indexOfB) {
-        return indexOfA - indexOfB;
-      }
-
-      return -1;
-    });
-
-  console.log("ordered selected tasks:", orderedSelectedTasks);
+  const filteredOrderedSelectedTasks = orderedSelectedTasks.filter(
+    (task) => task.id !== sourceDraggedItem.id
+  );
+  const modifiedOrderedSelectedTasks = [
+    { ...sourceDraggedItem },
+    ...filteredOrderedSelectedTasks,
+  ];
 
   const withRemovedTasks = Object.keys(columns).reduce((previous, columnId) => {
     const column = columns[columnId];
@@ -150,7 +137,7 @@ const reorderMultiDrag = ({
 
   const withInserted = (() => {
     const base = [...final.items];
-    base.splice(insertAtIndex, 0, ...orderedSelectedTasks);
+    base.splice(insertAtIndex, 0, ...modifiedOrderedSelectedTasks);
     return base;
   })();
 
