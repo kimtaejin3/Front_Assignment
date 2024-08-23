@@ -19,4 +19,4 @@
 
 ### 배포 url
 
-[완성된 결과물 바로 보러가기](http://www.google.co.kr)
+[완성된 결과물 바로 보러가기](https://front-assignment-kimtaejin3s-projects.vercel.app/)
