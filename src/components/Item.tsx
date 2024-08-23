@@ -4,8 +4,8 @@ import {
   DraggingStyle,
   NotDraggingStyle,
 } from "react-beautiful-dnd";
-import JerryImg from "../assets/static/image.png";
-import TomImg from "../assets/static/image2.png";
+import JerryImg from "../assets/static/jerry-img.png";
+import TomImg from "../assets/static/tom-img.png";
 
 export type Item = {
   id: string;
