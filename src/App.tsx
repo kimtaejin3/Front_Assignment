@@ -166,13 +166,7 @@ const App: React.FC = () => {
       if (
         targetItem?.isEven &&
         selectedTasks.filter((task) => task.isEven).length > 0
-        // !flag
       ) {
-        // if (destItem.id === targetItem.id) {
-        //   setFlag(true);
-        //   return;
-        // }
-        console.log("1");
         setIndexState(sourceDraggedItem.id);
         return;
       }
@@ -183,7 +177,6 @@ const App: React.FC = () => {
         destItem?.isEven &&
         selectedTasks[selectedTasks.length - 1].order > destItem.order
       ) {
-        console.log("2");
         setIndexState(sourceDraggedItem.id);
         return;
       }
@@ -195,7 +188,6 @@ const App: React.FC = () => {
         !selectedTasks.includes(destItem) &&
         selectedTasks[selectedTasks.length - 1]?.order < destItem?.dibsOrder
       ) {
-        console.log("3");
         setIndexState(sourceDraggedItem.id);
         return;
       }
@@ -205,7 +197,6 @@ const App: React.FC = () => {
         selectedTasks.filter((task) => task.isEven).length > 0 &&
         destItem?.isEven
       ) {
-        console.log("4");
         setIndexState(sourceDraggedItem.id);
         return;
       }
