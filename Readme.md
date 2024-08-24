@@ -11,9 +11,23 @@
 - [x] **멀티 드래그 기능 구현**: 여러 아이템을 동시에 선택하고 드래그하는 기능을 추가했습니다.
 - [x] **멀티 드래그시 드래그 제약 조건 적용**: 멀티 드래그 시에도 드래그 제약 규칙을 적용하였습니다.
 
-### 드래그 제약 조건
+### 드래그 제약 구현 결과
 
-### 추가 구현 사항 설명
+톰을 짝수 아이템으로, 제리를 홀수 아이템으로 취급하였습니다.
+
+- 싱글 드래그 제약 구현
+<img src="./screens/drag_limit01.gif"/>
+<img src="./screens/drag_limit02.gif"/>
+
+- 멀티 드래그 제약 구현
+<img src="./screens/multiDrag_limit01.gif"/>
+<img src="./screens/multiDrag_limit02.gif"/>
+
+
+- 1번 컬럼에서 3번 컬럼 이동 제약
+- 제리가 이동할 경우 3번 컬럼에서 톰이 나타납니다(유저의 재미를 위해 추가)
+<img src="./screens/drag_limit03.gif"/>
+
 
 ### 배포 url
 
