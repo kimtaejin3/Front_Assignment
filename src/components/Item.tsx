@@ -1,4 +1,4 @@
-import { CSSProperties, SetStateAction } from "react";
+import { CSSProperties, useContext } from "react";
 import {
   Draggable,
   DraggingStyle,
@@ -6,6 +6,7 @@ import {
 } from "react-beautiful-dnd";
 import JerryImg from "../assets/static/jerry-img.png";
 import TomImg from "../assets/static/tom-img.png";
+import { dragDataContext } from "../context/DragDataContext";
 
 export type Item = {
   id: string;
@@ -19,21 +20,13 @@ export type Item = {
 interface Props {
   item: Item;
   index: number;
-  indexState: string;
-  selectedTasks: Item[];
-  onSetSelectedTasks: React.Dispatch<SetStateAction<Item[]>>;
-  draggingTaskId: string;
 }
 
 //TODO: indexState 변수명 바꾸기
-export default function Item({
-  item,
-  index,
-  indexState,
-  selectedTasks,
-  onSetSelectedTasks,
-  draggingTaskId,
-}: Props) {
+export default function Item({ item, index }: Props) {
+  const { selectedTasks, onSetSelectedTasks, draggingTaskId, indexState } =
+    useContext(dragDataContext);
+
   const toggleSelectionInGroup = (task: Item) => {
     const index = selectedTasks.map((task) => task.id).indexOf(task.id);
 

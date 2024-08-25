@@ -1,8 +1,9 @@
-import { CSSProperties, SetStateAction } from "react";
+import { CSSProperties, useContext } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Item from "./Item";
 import type { Item as ItemType } from "./Item";
 import Tom from "../assets/gif/tom2.webp";
+import { dragDataContext } from "../context/DragDataContext";
 
 interface Props {
   columId: string;
@@ -10,22 +11,11 @@ interface Props {
     title: string;
     items: ItemType[];
   };
-  error: boolean;
-  indexState: null | string;
-  selectedTasks: ItemType[];
-  onSetSelectedTasks: React.Dispatch<SetStateAction<ItemType[]>>;
-  draggingTaskId: string;
 }
 
-export default function ItemList({
-  columId,
-  column,
-  error,
-  indexState,
-  selectedTasks,
-  onSetSelectedTasks,
-  draggingTaskId,
-}: Props) {
+export default function ItemList({ columId, column }: Props) {
+  const { error } = useContext(dragDataContext);
+
   return (
     <Droppable key={columId} droppableId={columId}>
       {(provided, snapshot) => (
@@ -46,15 +36,7 @@ export default function ItemList({
             />
           )}
           {column.items.map((item, index) => (
-            <Item
-              key={item.id}
-              item={item}
-              index={index}
-              indexState={indexState}
-              selectedTasks={selectedTasks}
-              onSetSelectedTasks={onSetSelectedTasks}
-              draggingTaskId={draggingTaskId}
-            />
+            <Item key={item.id} item={item} index={index} />
           ))}
           {provided.placeholder}
         </div>
