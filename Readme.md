@@ -13,21 +13,19 @@
 
 ### 드래그 제약 구현 결과
 
-톰을 짝수 아이템으로, 제리를 홀수 아이템으로 취급하였습니다.
+톰을 짝수 아이템으로, 제리를 홀수 아이템으로 취급하였습니다. 아이템을 여러개 선택하기 위해 윈도우의 경우 Ctrl, 맥의 경우 Cmd를 누른 후 선택해주세요.
 
 - 싱글 드래그 제약 구현
-<img src="./screens/drag_limit01.gif"/>
-<img src="./screens/drag_limit02.gif"/>
+  <img src="./screens/drag_limit01.gif"/>
+  <img src="./screens/drag_limit02.gif"/>
 
 - 멀티 드래그 제약 구현
-<img src="./screens/multiDrag_limit01.gif"/>
-<img src="./screens/multiDrag_limit02.gif"/>
-
+  <img src="./screens/multiDrag_limit01.gif"/>
+  <img src="./screens/multiDrag_limit02.gif"/>
 
 - 1번 컬럼에서 3번 컬럼 이동 제약
 - 제리가 이동할 경우 3번 컬럼에서 톰이 나타납니다(유저의 재미를 위해 추가)
-<img src="./screens/drag_limit03.gif"/>
-
+  <img src="./screens/drag_limit03.gif"/>
 
 ### 배포 url
 
