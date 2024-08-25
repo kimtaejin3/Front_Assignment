@@ -7,15 +7,7 @@ import {
 import JerryImg from "../assets/static/jerry-img.png";
 import TomImg from "../assets/static/tom-img.png";
 import { dragDataContext } from "../context/DragDataContext";
-
-export type Item = {
-  id: string;
-  Task: string;
-  isEven: boolean;
-  order: number;
-  dibs?: string | null;
-  dibsOrder?: number | null;
-};
+import type { Item } from "../types";
 
 interface Props {
   item: Item;

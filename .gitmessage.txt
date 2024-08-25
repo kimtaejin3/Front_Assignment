@@ -7,3 +7,4 @@ style: 로직과는 상관없는 자잘한 코드수정
 design: css와 같은 스타일링
 rename: 폴더 및 파일 이름 변경
 move: 파일 및 폴더 경로 변경
+typings: 타입추가

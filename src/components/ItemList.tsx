@@ -1,7 +1,7 @@
 import { CSSProperties, useContext } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Item from "./Item";
-import type { Item as ItemType } from "./Item";
+import type { Item as ItemType } from "../types";
 import Tom from "../assets/gif/tom2.webp";
 import { dragDataContext } from "../context/DragDataContext";
 

@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { reconcilateColumnItems } from "../utils/dragReorderUtil";
-import { Item } from "../components/Item";
+import type { ColumnsType, Item } from "../types";
 
 type ContextType = {
   columns: ColumnsType;
@@ -52,13 +52,6 @@ export const data = [
     order: 5,
   },
 ];
-
-export type ColumnsType = {
-  [x: string]: {
-    title: string;
-    items: Item[];
-  };
-};
 
 export const idTitleMap = {
   "1": "To-do",
