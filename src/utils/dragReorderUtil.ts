@@ -173,8 +173,8 @@ export const reconcilateColumnItems = (itemList: ColumnsType) => {
       },
     });
   });
-  //TODO: 더 나은 방법 생각해보기 or 함수로 분리
-  Object.entries(temp).forEach(([columnId, value], index) => {
+
+  Object.entries(temp).forEach(([columnId, value]) => {
     Object.assign(temp, {
       ...temp,
       [columnId]: {

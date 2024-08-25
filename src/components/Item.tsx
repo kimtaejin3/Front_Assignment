@@ -14,7 +14,6 @@ interface Props {
   index: number;
 }
 
-//TODO: indexState 변수명 바꾸기
 export default function Item({ item, index }: Props) {
   const { selectedTasks, onSetSelectedTasks, draggingTaskId, indexState } =
     useContext(dragDataContext);

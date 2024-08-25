@@ -86,7 +86,6 @@ export default function DragDataContext({ children }: { children: ReactNode }) {
     reconcilateColumnItems(columnsFromBackend)
   );
   const [error, setError] = useState(false);
-  //TODO: indexState 변수이름 변경
   const [indexState, setIndexState] = useState<null | string>(null);
   const [selectedTasks, setSelectedTasks] = useState<ItemType[]>([]);
   const [draggingTaskId, setDraggingTaskId] = useState<null | string>(null);
