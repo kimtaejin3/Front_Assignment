@@ -14,7 +14,6 @@ export default function useHandleDragUpdate() {
     setIndexState(null);
 
     const sourceColumn = columns[result.source?.droppableId];
-    //dragged
     const sourceDraggedItem = sourceColumn?.items[result.source?.index];
 
     const destColumn = columns[result.destination?.droppableId];
