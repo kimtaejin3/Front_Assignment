@@ -94,8 +94,6 @@ const App: React.FC = () => {
   const [indexState, setIndexState] = useState<null | string>(null);
   const [selectedTasks, setSelectedTasks] = useState<Item[]>([]);
   const [draggingTaskId, setDraggingTaskId] = useState(null);
-  //TODO: flag 변수명 변경
-  const [flag, setFlag] = useState(false);
 
   const onDragEnd = (
     result: DropResult,
