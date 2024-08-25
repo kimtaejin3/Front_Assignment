@@ -7,7 +7,6 @@ export default function useHandleDragUpdate() {
     onSetError: setError,
     onSetIndexState: setIndexState,
     columns,
-    onSetColumns: setColumns,
     selectedTasks,
   } = useContext(dragDataContext);
 
@@ -28,8 +27,10 @@ export default function useHandleDragUpdate() {
       );
 
       if (
+        sourceColumn === destColumn &&
         targetItem?.isEven &&
-        selectedTasks.filter((task) => task.isEven).length > 0
+        selectedTasks.filter((task) => task.isEven).length > 0 &&
+        targetItem.order > destItem.order
       ) {
         setIndexState(sourceDraggedItem.id);
         return;
