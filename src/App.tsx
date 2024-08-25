@@ -10,7 +10,7 @@ import ItemList from "./components/ItemList";
 import {
   mutliDragAwareReorder,
   reconcilateColumnItems,
-} from "./utils/dragUtil";
+} from "./utils/dragReorderUtil";
 import type { Item } from "./components/Item";
 import "./App.css";
 
