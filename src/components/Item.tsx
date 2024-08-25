@@ -8,6 +8,8 @@ import JerryImg from "../assets/static/jerry-img.png";
 import TomImg from "../assets/static/tom-img.png";
 import { dragDataContext } from "../context/DragDataContext";
 import type { ItemType } from "../types";
+import { GRID } from "../constants";
+import useHandleSelectItems from "../hooks/useHandleSelectItems";
 
 interface Props {
   item: ItemType;
@@ -15,60 +17,10 @@ interface Props {
 }
 
 export default function Item({ item, index }: Props) {
-  const { selectedTasks, onSetSelectedTasks, draggingTaskId, indexState } =
+  const { selectedTasks, draggingTaskId, indexState } =
     useContext(dragDataContext);
 
-  const toggleSelectionInGroup = (task: ItemType) => {
-    const index = selectedTasks.map((task) => task.id).indexOf(task.id);
-
-    if (index === -1) {
-      onSetSelectedTasks([...selectedTasks, task]);
-
-      return;
-    }
-
-    const shallow = [...selectedTasks];
-    shallow.splice(index, 1);
-
-    onSetSelectedTasks(shallow);
-  };
-
-  const wasToggleInSelectionGroupKeyUsed = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    const isUsingWindows = navigator.platform.indexOf("Win") >= 0;
-    return isUsingWindows ? e.ctrlKey : e.metaKey;
-  };
-
-  const toggleSelection = (task: ItemType) => {
-    const wasSelected = selectedTasks.map((task) => task.id).includes(task.id);
-
-    const newTaskIds = (() => {
-      if (!wasSelected) {
-        return [task];
-      }
-
-      if (selectedTasks.length > 1) {
-        return [task];
-      }
-
-      return [];
-    })();
-
-    onSetSelectedTasks(newTaskIds);
-  };
-
-  const performAction = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    item: ItemType
-  ) => {
-    if (wasToggleInSelectionGroupKeyUsed(e)) {
-      toggleSelectionInGroup(item);
-      return;
-    }
-
-    toggleSelection(item);
-  };
+  const { handleSelectItems } = useHandleSelectItems();
 
   const onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.defaultPrevented) {
@@ -76,7 +28,7 @@ export default function Item({ item, index }: Props) {
     }
 
     e.preventDefault();
-    performAction(e, item);
+    handleSelectItems(e, item);
   };
 
   const isSelected = selectedTasks.some(
@@ -109,16 +61,7 @@ export default function Item({ item, index }: Props) {
             </span>
           )}
           <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-            <div
-              style={{
-                width: 25,
-                height: 25,
-                backgroundColor: "#eee",
-                borderRadius: "50%",
-                flexShrink: 0,
-                overflow: "hidden",
-              }}
-            >
+            <div style={getImgContainerStyle}>
               <img
                 style={{ width: "100%", height: "100%" }}
                 src={item.isEven ? TomImg : JerryImg}
@@ -138,9 +81,6 @@ export default function Item({ item, index }: Props) {
     </Draggable>
   );
 }
-
-//TODO: 파일 분리후 상수화
-const GRID = 8;
 
 const getItemStyle = (
   isDragging: boolean,
@@ -186,3 +126,12 @@ const getNamePlate = (isEven: boolean): CSSProperties => ({
   fontSize: 13,
   color: "#000",
 });
+
+const getImgContainerStyle: CSSProperties = {
+  width: 25,
+  height: 25,
+  backgroundColor: "#eee",
+  borderRadius: "50%",
+  flexShrink: 0,
+  overflow: "hidden",
+};

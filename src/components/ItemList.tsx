@@ -4,6 +4,7 @@ import Item from "./Item";
 import type { ItemType } from "../types";
 import Tom from "../assets/gif/tom2.webp";
 import { dragDataContext } from "../context/DragDataContext";
+import { GRID } from "../constants";
 
 interface Props {
   columId: string;
@@ -44,8 +45,6 @@ export default function ItemList({ columId, column }: Props) {
     </Droppable>
   );
 }
-
-const GRID = 8;
 
 const getListStyle = (isDraggingOver: boolean): CSSProperties => ({
   background: isDraggingOver ? "#ffeadb" : "#ebecf0",
