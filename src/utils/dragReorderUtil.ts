@@ -1,15 +1,15 @@
 import { DraggableLocation } from "react-beautiful-dnd";
 import { idTitleMap } from "../context/DragDataContext";
-import type { ColumnsType, Item } from "../types";
+import type { ColumnsType, ItemType } from "../types";
 
 type Args = {
   columns: ColumnsType;
-  selectedTasks: Item[];
+  selectedTasks: ItemType[];
   source: DraggableLocation;
   destination: DraggableLocation;
 };
 
-const reorder = (list: Item[], startIndex: number, endIndex: number) => {
+const reorder = (list: ItemType[], startIndex: number, endIndex: number) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);

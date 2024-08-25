@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { reconcilateColumnItems } from "../utils/dragReorderUtil";
-import type { ColumnsType, Item } from "../types";
+import type { ColumnsType, ItemType } from "../types";
 
 type ContextType = {
   columns: ColumnsType;
@@ -9,8 +9,8 @@ type ContextType = {
   onSetError: React.Dispatch<React.SetStateAction<boolean>>;
   indexState: null | string;
   onSetIndexState: React.Dispatch<React.SetStateAction<null | string>>;
-  selectedTasks: Item[];
-  onSetSelectedTasks: React.Dispatch<React.SetStateAction<Item[]>>;
+  selectedTasks: ItemType[];
+  onSetSelectedTasks: React.Dispatch<React.SetStateAction<ItemType[]>>;
   draggingTaskId: string | null;
   onSetDraggingTaskId: React.Dispatch<React.SetStateAction<null | string>>;
 };
@@ -88,7 +88,7 @@ export default function DragDataContext({ children }: { children: ReactNode }) {
   const [error, setError] = useState(false);
   //TODO: indexState 변수이름 변경
   const [indexState, setIndexState] = useState<null | string>(null);
-  const [selectedTasks, setSelectedTasks] = useState<Item[]>([]);
+  const [selectedTasks, setSelectedTasks] = useState<ItemType[]>([]);
   const [draggingTaskId, setDraggingTaskId] = useState<null | string>(null);
 
   return (

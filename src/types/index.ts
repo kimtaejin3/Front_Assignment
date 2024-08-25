@@ -1,4 +1,4 @@
-type Item = {
+type ItemType = {
   id: string;
   Task: string;
   isEven: boolean;
@@ -10,8 +10,8 @@ type Item = {
 type ColumnsType = {
   [x: string]: {
     title: string;
-    items: Item[];
+    items: ItemType[];
   };
 };
 
-export { Item, ColumnsType };
+export { ItemType, ColumnsType };

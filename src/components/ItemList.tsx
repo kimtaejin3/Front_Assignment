@@ -1,7 +1,7 @@
 import { CSSProperties, useContext } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Item from "./Item";
-import type { Item as ItemType } from "../types";
+import type { ItemType } from "../types";
 import Tom from "../assets/gif/tom2.webp";
 import { dragDataContext } from "../context/DragDataContext";
 
@@ -22,7 +22,7 @@ export default function ItemList({ columId, column }: Props) {
         <div
           ref={provided.innerRef}
           {...provided.droppableProps}
-          style={getListStyle(snapshot.isDraggingOver, error)}
+          style={getListStyle(snapshot.isDraggingOver)}
         >
           {columId === "3" && (
             <img
@@ -47,10 +47,7 @@ export default function ItemList({ columId, column }: Props) {
 
 const GRID = 8;
 
-const getListStyle = (
-  isDraggingOver: boolean,
-  error: boolean
-): CSSProperties => ({
+const getListStyle = (isDraggingOver: boolean): CSSProperties => ({
   background: isDraggingOver ? "#ffeadb" : "#ebecf0",
 
   padding: GRID,

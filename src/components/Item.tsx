@@ -7,10 +7,10 @@ import {
 import JerryImg from "../assets/static/jerry-img.png";
 import TomImg from "../assets/static/tom-img.png";
 import { dragDataContext } from "../context/DragDataContext";
-import type { Item } from "../types";
+import type { ItemType } from "../types";
 
 interface Props {
-  item: Item;
+  item: ItemType;
   index: number;
 }
 
@@ -19,7 +19,7 @@ export default function Item({ item, index }: Props) {
   const { selectedTasks, onSetSelectedTasks, draggingTaskId, indexState } =
     useContext(dragDataContext);
 
-  const toggleSelectionInGroup = (task: Item) => {
+  const toggleSelectionInGroup = (task: ItemType) => {
     const index = selectedTasks.map((task) => task.id).indexOf(task.id);
 
     if (index === -1) {
@@ -41,7 +41,7 @@ export default function Item({ item, index }: Props) {
     return isUsingWindows ? e.ctrlKey : e.metaKey;
   };
 
-  const toggleSelection = (task: Item) => {
+  const toggleSelection = (task: ItemType) => {
     const wasSelected = selectedTasks.map((task) => task.id).includes(task.id);
 
     const newTaskIds = (() => {
@@ -61,7 +61,7 @@ export default function Item({ item, index }: Props) {
 
   const performAction = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    item: Item
+    item: ItemType
   ) => {
     if (wasToggleInSelectionGroupKeyUsed(e)) {
       toggleSelectionInGroup(item);
