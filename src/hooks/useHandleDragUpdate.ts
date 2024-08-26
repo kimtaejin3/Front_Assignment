@@ -18,6 +18,9 @@ export default function useHandleDragUpdate() {
 
     const destColumn = columns[result.destination?.droppableId];
     const destItem = destColumn?.items[result.destination?.index];
+
+    if (sourceDraggedItem === destItem) return;
+
     if (selectedTasks.length > 0) {
       const maxOrder = Math.max(...selectedTasks.map((value) => value.order));
 
@@ -31,6 +34,7 @@ export default function useHandleDragUpdate() {
         selectedTasks.filter((task) => task.isEven).length > 0 &&
         targetItem.order > destItem.order
       ) {
+        console.log(1);
         setIndexState(sourceDraggedItem.id);
         return;
       }
@@ -41,6 +45,9 @@ export default function useHandleDragUpdate() {
         destItem?.isEven &&
         selectedTasks[selectedTasks.length - 1].order > destItem.order
       ) {
+        console.log(2);
+        console.log(destItem);
+
         setIndexState(sourceDraggedItem.id);
         return;
       }
@@ -52,6 +59,8 @@ export default function useHandleDragUpdate() {
         !selectedTasks.includes(destItem) &&
         selectedTasks[selectedTasks.length - 1]?.order < destItem?.dibsOrder
       ) {
+        console.log(3);
+
         setIndexState(sourceDraggedItem.id);
         return;
       }
@@ -61,6 +70,8 @@ export default function useHandleDragUpdate() {
         selectedTasks.filter((task) => task.isEven).length > 0 &&
         destItem?.isEven
       ) {
+        console.log(4);
+
         setIndexState(sourceDraggedItem.id);
         return;
       }

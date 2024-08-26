@@ -103,7 +103,7 @@ const reorderMultiDrag = ({
         return previous + 1;
       }, 0);
 
-    const result = destination.index - destinationIndexOffset;
+    const result = destination.index;
     return result;
   })();
 
