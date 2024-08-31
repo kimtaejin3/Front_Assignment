@@ -110,7 +110,6 @@ export default function useHandleDragUpdate() {
 
     if (
       sourceColumn === destColumn &&
-      sourceDraggedItem?.id !== destItem?.id &&
       sourceDraggedItem?.isEven &&
       destItem?.isEven &&
       sourceDraggedItem.order > destItem.order
@@ -121,7 +120,6 @@ export default function useHandleDragUpdate() {
 
     if (
       sourceColumn !== destColumn &&
-      sourceDraggedItem?.id !== destItem?.id &&
       sourceDraggedItem?.isEven &&
       destItem?.isEven
     ) {
