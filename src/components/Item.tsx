@@ -9,7 +9,7 @@ import TomImg from "../assets/static/tom-img.png";
 import { dragDataContext } from "../context/DragDataContext";
 import type { ItemType } from "../types";
 import { GRID } from "../constants";
-import useHandleSelectItems from "../hooks/useHandleSelectItems";
+import useHandleSelectItems from "../context/hooks/useHandleSelectItems";
 
 interface Props {
   item: ItemType;

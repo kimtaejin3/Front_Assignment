@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { dragDataContext } from "../context/DragDataContext";
+import { dragDataContext } from "../DragDataContext";
 import { DragStart } from "react-beautiful-dnd";
 
 export default function useHandleDragStart() {

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { DropResult } from "react-beautiful-dnd";
-import { dragDataContext } from "../context/DragDataContext";
-import { mutliDragAwareReorder } from "../utils/dragReorderUtil";
+import { dragDataContext } from "../DragDataContext";
+import { mutliDragAwareReorder } from "../../utils/dragReorderUtil";
 
 export default function useHandleDragEnd() {
   const {

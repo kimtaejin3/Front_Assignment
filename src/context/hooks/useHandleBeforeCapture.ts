@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { BeforeCapture } from "react-beautiful-dnd";
-import { dragDataContext } from "../context/DragDataContext";
+import { dragDataContext } from "../DragDataContext";
 
 export default function useHandleBeforeCapture() {
   const {

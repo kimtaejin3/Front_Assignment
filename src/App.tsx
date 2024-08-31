@@ -2,11 +2,11 @@ import { CSSProperties, useContext } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import ItemList from "./components/ItemList";
 import "./App.css";
-import useHandleDragEnd from "./hooks/useHandleDragEnd";
-import useHandleDragUpdate from "./hooks/useHandleDragUpdate";
+import useHandleDragEnd from "./context/hooks/useHandleDragEnd";
+import useHandleDragUpdate from "./context/hooks/useHandleDragUpdate";
 import { dragDataContext } from "./context/DragDataContext";
-import useHandleBeforeCapture from "./hooks/useHandleBeforeCapture";
-import useHandleDragStart from "./hooks/useHandleDragStart";
+import useHandleBeforeCapture from "./context/hooks/useHandleBeforeCapture";
+import useHandleDragStart from "./context/hooks/useHandleDragStart";
 
 export default function App() {
   const { columns } = useContext(dragDataContext);
@@ -32,7 +32,7 @@ export default function App() {
       </DragDropContext>
     </div>
   );
-};
+}
 
 const getListContainerStyle: CSSProperties = {
   display: "flex",

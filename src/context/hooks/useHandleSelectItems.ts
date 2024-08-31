@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { dragDataContext } from "../context/DragDataContext";
-import { ItemType } from "../types";
+import { dragDataContext } from "../DragDataContext";
+import { ItemType } from "../../types";
 
 export default function useHandleSelectItems() {
   const { selectedTasks, onSetSelectedTasks } = useContext(dragDataContext);
