@@ -8,7 +8,7 @@ import { dragDataContext } from "./context/DragDataContext";
 import useHandleBeforeCapture from "./hooks/useHandleBeforeCapture";
 import useHandleDragStart from "./hooks/useHandleDragStart";
 
-const App: React.FC = () => {
+export default function App() {
   const { columns } = useContext(dragDataContext);
   const { handleDragEnd } = useHandleDragEnd();
   const { handleDragUpdate } = useHandleDragUpdate();
@@ -40,5 +40,3 @@ const getListContainerStyle: CSSProperties = {
   width: "fit-content",
   margin: "100px auto 0",
 };
-
-export default App;
