@@ -47,6 +47,7 @@ export default function useHandleDragUpdate() {
       ) {
         console.log(2);
         console.log(destItem);
+        console.log(selectedTasks[selectedTasks.length - 1])
 
         setIndexState(sourceDraggedItem.id);
         return;
