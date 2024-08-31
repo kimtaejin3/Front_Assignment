@@ -19,7 +19,10 @@ export default function useHandleDragUpdate() {
     const destColumn = columns[result.destination?.droppableId];
     const destItem = destColumn?.items[result.destination?.index];
 
-    if (sourceDraggedItem === destItem) return;
+    if (sourceDraggedItem === destItem) {
+      console.log('check')
+      return;
+    }
 
     if (selectedTasks.length > 0) {
       const maxOrder = Math.max(...selectedTasks.map((value) => value.order));
