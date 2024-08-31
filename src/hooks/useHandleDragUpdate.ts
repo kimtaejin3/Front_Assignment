@@ -37,6 +37,10 @@ export default function useHandleDragUpdate() {
         console.log(1);
         setIndexState(sourceDraggedItem.id);
         return;
+      }else{
+        console.log(targetItem.isEven);
+        console.log(selectedTasks.filter((task)=> task.isEven).length);
+        console.log(targetItem.order > destItem.order)
       }
 
       if (
