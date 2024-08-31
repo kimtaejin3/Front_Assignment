@@ -5,7 +5,7 @@ import { ItemType } from "../types";
 
 export default function useHandleDragUpdate() {
   const {
-    onSetError: setError,
+    onSetErrorForColumnRestriction: setErrorForColumnRestriction,
     onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
     columns,
     selectedTasks,
@@ -15,20 +15,19 @@ export default function useHandleDragUpdate() {
     result: DragUpdate,
     sourceDraggedItem: ItemType
   ) => {
-    console.log("asdf");
     if (
       result.destination?.droppableId === "3" &&
       result.source?.droppableId === "1"
     ) {
       setDraggingTaskIdWithError(sourceDraggedItem.id);
       if (!sourceDraggedItem?.isEven) {
-        setError(true);
+        setErrorForColumnRestriction(true);
       }
       return true;
     } else {
       setDraggingTaskIdWithError(null);
       if (!sourceDraggedItem?.isEven) {
-        setError(false);
+        setErrorForColumnRestriction(false);
       }
       return false;
     }

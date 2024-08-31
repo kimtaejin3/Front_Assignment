@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function ItemList({ columId, column }: Props) {
-  const { error } = useContext(dragDataContext);
+  const { errorForColumnRestriction } = useContext(dragDataContext);
 
   return (
     <Droppable key={columId} droppableId={columId}>
@@ -30,7 +30,7 @@ export default function ItemList({ columId, column }: Props) {
               style={{
                 position: "absolute",
                 zIndex: -1,
-                top: error ? -120 : 0,
+                top: errorForColumnRestriction ? -120 : 0,
                 transition: "all .5s",
               }}
               src={Tom}

@@ -5,10 +5,12 @@ import type { ColumnsType, ItemType } from "../types";
 type ContextType = {
   columns: ColumnsType;
   onSetColumns: React.Dispatch<React.SetStateAction<ColumnsType>>;
-  error: boolean;
-  onSetError: React.Dispatch<React.SetStateAction<boolean>>;
+  errorForColumnRestriction: boolean;
+  onSetErrorForColumnRestriction: React.Dispatch<React.SetStateAction<boolean>>;
   draggingTaskIdWithError: null | string;
-  onSetDraggingTaskIdWithError: React.Dispatch<React.SetStateAction<null | string>>;
+  onSetDraggingTaskIdWithError: React.Dispatch<
+    React.SetStateAction<null | string>
+  >;
   selectedTasks: ItemType[];
   onSetSelectedTasks: React.Dispatch<React.SetStateAction<ItemType[]>>;
   draggingTaskId: string | null;
@@ -85,8 +87,11 @@ export default function DragDataContext({ children }: { children: ReactNode }) {
   const [columns, setColumns] = useState<ColumnsType>(
     reconcilateColumnItems(columnsFromBackend)
   );
-  const [error, setError] = useState(false);
-  const [draggingTaskIdWithError, setDraggingTaskIdWithError] = useState<null | string>(null);
+  const [errorForColumnRestriction, setErrorForColumnRestriction] =
+    useState(false);
+  const [draggingTaskIdWithError, setDraggingTaskIdWithError] = useState<
+    null | string
+  >(null);
   const [selectedTasks, setSelectedTasks] = useState<ItemType[]>([]);
   const [draggingTaskId, setDraggingTaskId] = useState<null | string>(null);
 
@@ -94,12 +99,12 @@ export default function DragDataContext({ children }: { children: ReactNode }) {
     <dragDataContext.Provider
       value={{
         columns,
-        error,
+        errorForColumnRestriction,
         draggingTaskIdWithError,
         selectedTasks,
         draggingTaskId,
         onSetColumns: setColumns,
-        onSetError: setError,
+        onSetErrorForColumnRestriction: setErrorForColumnRestriction,
         onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
         onSetSelectedTasks: setSelectedTasks,
         onSetDraggingTaskId: setDraggingTaskId,

@@ -5,8 +5,8 @@ import { mutliDragAwareReorder } from "../utils/dragReorderUtil";
 
 export default function useHandleDragEnd() {
   const {
-    error,
-    onSetError: setError,
+    errorForColumnRestriction,
+    onSetErrorForColumnRestriction: setErrorForColumnRestriction,
     onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
     onSetSelectedTasks: setSelectedTasks,
     onSetDraggingTaskId: setDraggingTaskId,
@@ -23,9 +23,9 @@ export default function useHandleDragEnd() {
     if (
       source?.droppableId === "1" &&
       destination?.droppableId === "3" &&
-      error
+      errorForColumnRestriction
     ) {
-      setError(false);
+      setErrorForColumnRestriction(false);
       setDraggingTaskIdWithError(null);
       setSelectedTasks([]);
       setDraggingTaskId(null);
