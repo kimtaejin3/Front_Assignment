@@ -4,9 +4,9 @@ import { DragStart } from "react-beautiful-dnd";
 
 export default function useHandleDragStart() {
   const {
-    onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
     columns,
     selectedTasks,
+    onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
   } = useContext(dragDataContext);
 
   //drag update가 일어나기 전에 드래그 제약조건을 구현하기 위함.

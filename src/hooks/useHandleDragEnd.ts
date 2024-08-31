@@ -5,15 +5,15 @@ import { mutliDragAwareReorder } from "../utils/dragReorderUtil";
 
 export default function useHandleDragEnd() {
   const {
+    columns,
+    selectedTasks,
+    draggingTaskIdWithError,
     errorForColumnRestriction,
-    onSetErrorForColumnRestriction: setErrorForColumnRestriction,
-    onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
+    onSetColumns: setColumns,
     onSetSelectedTasks: setSelectedTasks,
     onSetDraggingTaskId: setDraggingTaskId,
-    columns,
-    onSetColumns: setColumns,
-    draggingTaskIdWithError,
-    selectedTasks,
+    onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
+    onSetErrorForColumnRestriction: setErrorForColumnRestriction,
   } = useContext(dragDataContext);
 
   const handleAfterError = () => {

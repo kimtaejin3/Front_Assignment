@@ -5,10 +5,10 @@ import { ItemType } from "../types";
 
 export default function useHandleDragUpdate() {
   const {
-    onSetErrorForColumnRestriction: setErrorForColumnRestriction,
-    onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
     columns,
     selectedTasks,
+    onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
+    onSetErrorForColumnRestriction: setErrorForColumnRestriction,
   } = useContext(dragDataContext);
 
   const preventMoveColOneToColThree = (
