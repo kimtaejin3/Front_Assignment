@@ -43,7 +43,7 @@ export default function useHandleDragUpdate() {
         sourceColumn === destColumn &&
         selectedTasks.filter((task) => task.isEven).length > 0 &&
         destItem?.isEven &&
-        selectedTasks[selectedTasks.length - 1].order > destItem.order
+        sourceDraggedItem?.order > destItem?.order
       ) {
         console.log(2);
         console.log(destItem);
@@ -58,7 +58,7 @@ export default function useHandleDragUpdate() {
         selectedTasks.filter((task) => task.isEven).length > 0 &&
         destItem?.dibsOrder !== null &&
         !selectedTasks.includes(destItem) &&
-        selectedTasks[selectedTasks.length - 1]?.order < destItem?.dibsOrder
+        sourceDraggedItem?.order < destItem?.dibsOrder
       ) {
         console.log(3);
 
