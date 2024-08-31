@@ -35,7 +35,7 @@ export default function useHandleDragUpdate() {
         sourceColumn === destColumn &&
         targetItem?.isEven &&
         selectedTasks.filter((task) => task.isEven).length > 0 &&
-        targetItem.order > destItem.order
+        targetItem?.order > destItem?.order
       ) {
         console.log(1);
         setIndexState(sourceDraggedItem.id);
