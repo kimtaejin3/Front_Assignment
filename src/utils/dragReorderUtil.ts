@@ -18,7 +18,6 @@ const reorder = (list: ItemType[], startIndex: number, endIndex: number) => {
 };
 
 const reorderSingleDrag = ({ columns, source, destination }: Args) => {
-  // moving in the same list
   if (source.droppableId === destination.droppableId) {
     const column = columns[source.droppableId];
 
@@ -79,33 +78,7 @@ const reorderMultiDrag = ({
   const sourceColumn = columns[source.droppableId];
   const sourceDraggedItem = sourceColumn.items[source.index];
 
-  const insertAtIndex = (() => {
-    const destinationIndexOffset = selectedTasks
-      .map((task) => task.id)
-      .reduce((previous, current) => {
-        if (current === sourceDraggedItem.id) {
-          return previous;
-        }
-
-        const DestColumn = columns[destination.droppableId];
-        const column = getHomeColumn(columns, current);
-
-        if (column !== DestColumn) {
-          return previous;
-        }
-
-        const index = column.items.map((item) => item.id).indexOf(current);
-
-        if (index >= destination.index) {
-          return previous;
-        }
-
-        return previous + 1;
-      }, 0);
-
-    const result = destination.index;
-    return result;
-  })();
+  const insertAtIndex = destination.index;
 
   const orderedSelectedTasks = [...selectedTasks];
 

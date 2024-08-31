@@ -9,11 +9,11 @@ export default function useHandleDragStart() {
     selectedTasks,
   } = useContext(dragDataContext);
 
+  //drag update가 일어나기 전에 드래그 제약조건을 구현하기 위함.
   const handleDragStart = (start: DragStart) => {
     if (selectedTasks.length < 2) return;
 
     const column = columns[start.source?.droppableId];
-    //dragged
     const sourceDraggedItem = column.items[start.source.index];
 
     const maxOrder = Math.max(...selectedTasks.map((value) => value.order));
@@ -28,7 +28,6 @@ export default function useHandleDragStart() {
       setDraggingTaskIdWithError(sourceDraggedItem.id);
       return;
     }
-
   };
 
   return { handleDragStart };
