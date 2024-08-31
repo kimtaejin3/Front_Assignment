@@ -4,7 +4,7 @@ import { DragStart } from "react-beautiful-dnd";
 
 export default function useHandleDragStart() {
   const {
-    onSetIndexState: setIndexState,
+    onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
     columns,
     selectedTasks,
   } = useContext(dragDataContext);
@@ -25,22 +25,10 @@ export default function useHandleDragStart() {
       targetItem?.isEven &&
       selectedTasks.filter((task) => task.isEven).length > 0
     ) {
-      setIndexState(sourceDraggedItem.id);
+      setDraggingTaskIdWithError(sourceDraggedItem.id);
       return;
     }
 
-    let flag = false;
-
-    for (let i = 0; i < selectedTasks.length - 1; i++) {
-      if (selectedTasks[i]?.isEven && selectedTasks[i + 1]?.isEven) {
-        flag = true;
-      }
-    }
-
-    if (flag) {
-      setIndexState(sourceDraggedItem.id);
-      return;
-    }
   };
 
   return { handleDragStart };

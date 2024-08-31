@@ -7,8 +7,8 @@ type ContextType = {
   onSetColumns: React.Dispatch<React.SetStateAction<ColumnsType>>;
   error: boolean;
   onSetError: React.Dispatch<React.SetStateAction<boolean>>;
-  indexState: null | string;
-  onSetIndexState: React.Dispatch<React.SetStateAction<null | string>>;
+  draggingTaskIdWithError: null | string;
+  onSetDraggingTaskIdWithError: React.Dispatch<React.SetStateAction<null | string>>;
   selectedTasks: ItemType[];
   onSetSelectedTasks: React.Dispatch<React.SetStateAction<ItemType[]>>;
   draggingTaskId: string | null;
@@ -86,7 +86,7 @@ export default function DragDataContext({ children }: { children: ReactNode }) {
     reconcilateColumnItems(columnsFromBackend)
   );
   const [error, setError] = useState(false);
-  const [indexState, setIndexState] = useState<null | string>(null);
+  const [draggingTaskIdWithError, setDraggingTaskIdWithError] = useState<null | string>(null);
   const [selectedTasks, setSelectedTasks] = useState<ItemType[]>([]);
   const [draggingTaskId, setDraggingTaskId] = useState<null | string>(null);
 
@@ -94,14 +94,14 @@ export default function DragDataContext({ children }: { children: ReactNode }) {
     <dragDataContext.Provider
       value={{
         columns,
-        onSetColumns: setColumns,
         error,
-        onSetError: setError,
-        indexState,
-        onSetIndexState: setIndexState,
+        draggingTaskIdWithError,
         selectedTasks,
-        onSetSelectedTasks: setSelectedTasks,
         draggingTaskId,
+        onSetColumns: setColumns,
+        onSetError: setError,
+        onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
+        onSetSelectedTasks: setSelectedTasks,
         onSetDraggingTaskId: setDraggingTaskId,
       }}
     >

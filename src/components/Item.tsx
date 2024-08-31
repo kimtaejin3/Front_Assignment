@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function Item({ item, index }: Props) {
-  const { selectedTasks, draggingTaskId, indexState } =
+  const { selectedTasks, draggingTaskId, draggingTaskIdWithError } =
     useContext(dragDataContext);
 
   const { handleSelectItems } = useHandleSelectItems();
@@ -48,7 +48,7 @@ export default function Item({ item, index }: Props) {
           style={getItemStyle(
             snapshot.isDragging,
             provided.draggableProps.style,
-            indexState === item.id,
+            draggingTaskIdWithError === item.id,
             isSelected,
             isGhosting,
             item.isEven

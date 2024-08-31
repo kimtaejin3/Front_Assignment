@@ -5,13 +5,13 @@ import { DragUpdate } from "react-beautiful-dnd";
 export default function useHandleDragUpdate() {
   const {
     onSetError: setError,
-    onSetIndexState: setIndexState,
+    onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
     columns,
     selectedTasks,
   } = useContext(dragDataContext);
 
   const handleDragUpdate = (result: DragUpdate) => {
-    setIndexState(null);
+    setDraggingTaskIdWithError(null);
 
     const sourceColumn = columns[result.source?.droppableId];
     const sourceDraggedItem = sourceColumn?.items[result.source?.index];
@@ -20,7 +20,10 @@ export default function useHandleDragUpdate() {
     const destItem = destColumn?.items[result.destination?.index];
 
     if (sourceDraggedItem === destItem) {
-      console.log('check')
+      return;
+    }
+
+    if(!sourceDraggedItem || !destItem) {
       return;
     }
 
@@ -33,54 +36,41 @@ export default function useHandleDragUpdate() {
 
       if (
         sourceColumn === destColumn &&
-        targetItem?.isEven &&
+        targetItem.isEven &&
         selectedTasks.filter((task) => task.isEven).length > 0 &&
-        targetItem?.order > destItem?.order
+        targetItem.order > destItem.order
       ) {
-        console.log(1);
-        setIndexState(sourceDraggedItem.id);
-        return;
-      }else{
-        console.log(targetItem.isEven);
-        console.log(selectedTasks.filter((task)=> task.isEven).length);
-        console.log(targetItem.order > destItem.order)
-      }
-
-      if (
-        sourceColumn === destColumn &&
-        selectedTasks.filter((task) => task.isEven).length > 0 &&
-        destItem?.isEven &&
-        sourceDraggedItem?.order > destItem?.order
-      ) {
-        console.log(2);
-        console.log(destItem);
-        console.log(selectedTasks[selectedTasks.length - 1])
-
-        setIndexState(sourceDraggedItem.id);
+        setDraggingTaskIdWithError(sourceDraggedItem.id);
         return;
       }
 
       if (
         sourceColumn === destColumn &&
         selectedTasks.filter((task) => task.isEven).length > 0 &&
-        destItem?.dibsOrder !== null &&
+        destItem.isEven &&
+        sourceDraggedItem.order > destItem.order
+      ) {
+        setDraggingTaskIdWithError(sourceDraggedItem.id);
+        return;
+      }
+
+      if (
+        sourceColumn === destColumn &&
+        selectedTasks.filter((task) => task.isEven).length > 0 &&
+        destItem.dibsOrder !== null &&
         !selectedTasks.includes(destItem) &&
-        sourceDraggedItem?.order < destItem?.dibsOrder
+        sourceDraggedItem.order < destItem.dibsOrder
       ) {
-        console.log(3);
-
-        setIndexState(sourceDraggedItem.id);
+        setDraggingTaskIdWithError(sourceDraggedItem.id);
         return;
       }
 
       if (
         sourceColumn !== destColumn &&
         selectedTasks.filter((task) => task.isEven).length > 0 &&
-        destItem?.isEven
+        destItem.isEven
       ) {
-        console.log(4);
-
-        setIndexState(sourceDraggedItem.id);
+        setDraggingTaskIdWithError(sourceDraggedItem.id);
         return;
       }
 
@@ -88,10 +78,10 @@ export default function useHandleDragUpdate() {
         result.destination?.droppableId === "3" &&
         result.source?.droppableId === "1"
       ) {
-        setIndexState(sourceDraggedItem.id);
+        setDraggingTaskIdWithError(sourceDraggedItem.id);
         setError(true);
       } else {
-        setIndexState(null);
+        setDraggingTaskIdWithError(null);
         setError(false);
       }
 
@@ -100,30 +90,30 @@ export default function useHandleDragUpdate() {
 
     if (
       sourceColumn === destColumn &&
-      sourceDraggedItem?.isEven &&
-      destItem?.dibsOrder !== null &&
-      sourceDraggedItem?.order < destItem?.dibsOrder
+      sourceDraggedItem.isEven &&
+      destItem.dibsOrder !== null &&
+      sourceDraggedItem.order < destItem.dibsOrder
     ) {
-      setIndexState(sourceDraggedItem.id);
+      setDraggingTaskIdWithError(sourceDraggedItem.id);
       return;
     }
 
     if (
       sourceColumn === destColumn &&
-      sourceDraggedItem?.isEven &&
-      destItem?.isEven &&
+      sourceDraggedItem.isEven &&
+      destItem.isEven &&
       sourceDraggedItem.order > destItem.order
     ) {
-      setIndexState(sourceDraggedItem.id);
+      setDraggingTaskIdWithError(sourceDraggedItem.id);
       return;
     }
 
     if (
       sourceColumn !== destColumn &&
-      sourceDraggedItem?.isEven &&
-      destItem?.isEven
+      sourceDraggedItem.isEven &&
+      destItem.isEven
     ) {
-      setIndexState(sourceDraggedItem.id);
+      setDraggingTaskIdWithError(sourceDraggedItem.id);
       return;
     }
 
@@ -131,12 +121,12 @@ export default function useHandleDragUpdate() {
       result.destination?.droppableId === "3" &&
       result.source?.droppableId === "1"
     ) {
-      setIndexState(sourceDraggedItem.id);
+      setDraggingTaskIdWithError(sourceDraggedItem.id);
       if (!sourceDraggedItem?.isEven) {
         setError(true);
       }
     } else {
-      setIndexState(null);
+      setDraggingTaskIdWithError(null);
       if (!sourceDraggedItem?.isEven) {
         setError(false);
       }

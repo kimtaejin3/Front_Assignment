@@ -7,12 +7,12 @@ export default function useHandleDragEnd() {
   const {
     error,
     onSetError: setError,
-    onSetIndexState: setIndexState,
+    onSetDraggingTaskIdWithError: setDraggingTaskIdWithError,
     onSetSelectedTasks: setSelectedTasks,
     onSetDraggingTaskId: setDraggingTaskId,
     columns,
     onSetColumns: setColumns,
-    indexState,
+    draggingTaskIdWithError,
     selectedTasks,
   } = useContext(dragDataContext);
 
@@ -26,14 +26,14 @@ export default function useHandleDragEnd() {
       error
     ) {
       setError(false);
-      setIndexState(null);
+      setDraggingTaskIdWithError(null);
       setSelectedTasks([]);
       setDraggingTaskId(null);
       return;
     }
 
-    if (indexState) {
-      setIndexState(null);
+    if (draggingTaskIdWithError) {
+      setDraggingTaskIdWithError(null);
       setSelectedTasks([]);
       setDraggingTaskId(null);
       return;
