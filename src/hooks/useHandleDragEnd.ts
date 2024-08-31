@@ -16,6 +16,12 @@ export default function useHandleDragEnd() {
     selectedTasks,
   } = useContext(dragDataContext);
 
+  const handleAfterError = () => {
+    setDraggingTaskIdWithError(null);
+    setSelectedTasks([]);
+    setDraggingTaskId(null);
+  };
+
   const handleDragEnd = (result: DropResult) => {
     const destination = result.destination;
     const source = result.source;
@@ -26,16 +32,12 @@ export default function useHandleDragEnd() {
       errorForColumnRestriction
     ) {
       setErrorForColumnRestriction(false);
-      setDraggingTaskIdWithError(null);
-      setSelectedTasks([]);
-      setDraggingTaskId(null);
+      handleAfterError();
       return;
     }
 
     if (draggingTaskIdWithError) {
-      setDraggingTaskIdWithError(null);
-      setSelectedTasks([]);
-      setDraggingTaskId(null);
+      handleAfterError();
       return;
     }
 
