@@ -103,8 +103,10 @@ const reorderMultiDrag = ({
       }, 0);
 
     const result = destination.index - destinationIndexOffset;
-    return result;
+    return result < 0 ? 0 : result;
   })();
+
+  console.log("destination.index:", destination.index);
 
   const orderedSelectedTasks = [...selectedTasks];
 

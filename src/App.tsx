@@ -6,14 +6,14 @@ import useHandleDragEnd from "./context/hooks/useHandleDragEnd";
 import useHandleDragUpdate from "./context/hooks/useHandleDragUpdate";
 import { dragDataContext } from "./context/DragDataContext";
 import useHandleBeforeCapture from "./context/hooks/useHandleBeforeCapture";
-import useHandleDragStart from "./context/hooks/useHandleDragStart";
+// import useHandleDragStart from "./context/hooks/useHandleDragStart";
 
 export default function App() {
   const { columns } = useContext(dragDataContext);
   const { handleDragEnd } = useHandleDragEnd();
   const { handleDragUpdate } = useHandleDragUpdate();
   const { handleBeforeCapture } = useHandleBeforeCapture();
-  const { handleDragStart } = useHandleDragStart();
+  // const { handleDragStart } = useHandleDragStart();
 
   return (
     <div>
@@ -22,7 +22,7 @@ export default function App() {
         onDragEnd={(result) => handleDragEnd(result)}
         onBeforeCapture={(start) => handleBeforeCapture(start)}
         onDragUpdate={(result) => handleDragUpdate(result)}
-        onDragStart={(start) => handleDragStart(start)}
+        // onDragStart={(start) => handleDragStart(start)}
       >
         <div style={getListContainerStyle}>
           {Object.entries(columns).map(([columId, column]) => {
