@@ -106,8 +106,6 @@ const reorderMultiDrag = ({
     return result < 0 ? 0 : result;
   })();
 
-  console.log("destination.index:", destination.index);
-
   const orderedSelectedTasks = [...selectedTasks];
 
   orderedSelectedTasks.sort((a, b) => {
