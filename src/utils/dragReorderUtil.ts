@@ -95,7 +95,7 @@ const reorderMultiDrag = ({
 
         const index = column.items.map((item) => item.id).indexOf(current);
 
-        if (index >= destination.index) {
+        if (index > destination.index) {
           return previous;
         }
 
