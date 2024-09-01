@@ -4,17 +4,17 @@ import type { ColumnsType, ItemType } from "../types";
 
 type ContextType = {
   columns: ColumnsType;
-  onSetColumns: React.Dispatch<React.SetStateAction<ColumnsType>>;
   errorForColumnRestriction: boolean;
-  onSetErrorForColumnRestriction: React.Dispatch<React.SetStateAction<boolean>>;
   draggingTaskIdWithError: null | string;
+  selectedTasks: ItemType[];
+  draggingTaskId: string | null;
+  onSetColumns: React.Dispatch<React.SetStateAction<ColumnsType>>;
+  onSetSelectedTasks: React.Dispatch<React.SetStateAction<ItemType[]>>;
+  onSetDraggingTaskId: React.Dispatch<React.SetStateAction<null | string>>;
+  onSetErrorForColumnRestriction: React.Dispatch<React.SetStateAction<boolean>>;
   onSetDraggingTaskIdWithError: React.Dispatch<
     React.SetStateAction<null | string>
   >;
-  selectedTasks: ItemType[];
-  onSetSelectedTasks: React.Dispatch<React.SetStateAction<ItemType[]>>;
-  draggingTaskId: string | null;
-  onSetDraggingTaskId: React.Dispatch<React.SetStateAction<null | string>>;
 };
 
 export const data = [
