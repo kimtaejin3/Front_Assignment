@@ -6,10 +6,10 @@ import {
 } from "react-beautiful-dnd";
 import JerryImg from "../assets/static/jerry-img.png";
 import TomImg from "../assets/static/tom-img.png";
-import { dragDataContext } from "../context/DragDataContext";
+import { dragDataContext } from "../dragContext/DragDataContext";
 import type { ItemType } from "../types";
 import { GRID } from "../constants";
-import useHandleSelectItems from "../context/hooks/useHandleSelectItems";
+import useHandleSelectItems from "../hooks/useHandleSelectItems";
 
 interface Props {
   item: ItemType;

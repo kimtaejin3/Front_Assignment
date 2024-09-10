@@ -3,7 +3,7 @@ import { Droppable } from "react-beautiful-dnd";
 import Item from "./Item";
 import type { ItemType } from "../types";
 import Tom from "../assets/gif/tom2.webp";
-import { dragDataContext } from "../context/DragDataContext";
+import { dragDataContext } from "../dragContext/DragDataContext";
 import { GRID } from "../constants";
 
 interface Props {

@@ -1,5 +1,5 @@
 import { DraggableLocation } from "react-beautiful-dnd";
-import { idTitleMap } from "../context/DragDataContext";
+import { idTitleMap } from "../dragContext/DragDataContext";
 import type { ColumnsType, ItemType } from "../types";
 
 type Args = {
